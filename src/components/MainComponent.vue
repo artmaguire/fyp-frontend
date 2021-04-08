@@ -26,15 +26,16 @@
         { title: "Directions Via Here", value: 3 },
       ]
     }
-  },
-  methods: {
-    contextMenuAction(action) {
-      this.$refs.menu.close();
-      console.log(action);
-      console.log(getMapLatLng());
+    },
+    methods: {
+      contextMenuAction(action) {
+        this.$refs.menu.close();
+        console.log(action);
+        console.log(getMapLatLng());
 
-      switch (action) {
-        //TODO: Context menu options
+        switch (action) {
+          //TODO: Context menu options
+        }
       }
     },
     computed: mapState(['routeType']),
@@ -45,7 +46,6 @@
       createMap();
     }
   }
-}
 </script>
 
 <template>
@@ -65,10 +65,6 @@
         </ContextMenu>
       </div>
       <Search></Search>
-
-      <div class="box all-roads-limerick-button" @click="allRoadLeadToLimerick">
-        <i class="all-roads-limerick-icon fas fa-road"></i>
-      </div>
     </div>
   </div>
 </template>
