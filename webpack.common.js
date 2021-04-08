@@ -5,15 +5,12 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require("copy-webpack-plugin");
 
 module.exports = {
-  /** @namespace env.PROXY **/
     entry: './src/main.js',
-    mode: 'development',
     target: 'web',
-    devtool: 'inline-source-map',
     output: {
       path: __dirname + '/public',
       publicPath: '/',
-      filename: 'bundle.js'
+      filename: '[name].bundle.js'
     },
     module: {
       rules: [
