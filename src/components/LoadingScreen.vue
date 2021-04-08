@@ -24,10 +24,7 @@ export default {
         <button class="button cancel-route" title="Cancel route" @click="cancelRoute">
           <i class="fa fa-times-circle"></i>
         </button>
-        <h2 v-if="type === 'all_roads'" class="finding-route-text">
-          'All Roads Lead to Limerick'
-        </h2>
-        <h2 v-else class="finding-route-text">
+        <h2 class="finding-route-text">
           {{ loadingTitle }}
         </h2>
 

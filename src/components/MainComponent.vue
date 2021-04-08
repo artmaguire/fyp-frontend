@@ -1,29 +1,29 @@
 <script>
-import SplashScreen from "./SplashScreen";
-import LoadingScreen from "./LoadingScreen";
-import Search from "./Search";
-import ContextMenu from "./ContextMenu/ContextMenu";
-import ContextMenuItem from "./ContextMenu/ContextMenuItem";
+  import SplashScreen from "./SplashScreen";
+  import LoadingScreen from "./LoadingScreen";
+  import Search from "./Search";
+  import ContextMenu from "./ContextMenu/ContextMenu";
+  import ContextMenuItem from "./ContextMenu/ContextMenuItem";
 
-import { allRoads, createMap, getMapLatLng } from '../js/map';
-import { mapState } from "vuex";
+  import { createMap, getMapLatLng } from '../js/map';
+  import { mapState } from "vuex";
 
-export default {
-  name: 'MainComponent',
-  components: {
-    LoadingScreen,
-    SplashScreen,
-    Search,
-    ContextMenu,
-    ContextMenuItem
-  },
-  data: function () {
-    return {
+  export default {
+    name: 'MainComponent',
+    components: {
+      LoadingScreen,
+      SplashScreen,
+      Search,
+      ContextMenu,
+      ContextMenuItem
+    },
+    data: function () {
+      return {
       isSplashLoading: true,
       contextMenuItems: [
-        {title: "Directions From Here", value: 1},
-        {title: "Directions To Here", value: 2},
-        {title: "Directions Via Here", value: 3},
+        { title: "Directions From Here", value: 1 },
+        { title: "Directions To Here", value: 2 },
+        { title: "Directions Via Here", value: 3 },
       ]
     }
   },
@@ -34,27 +34,16 @@ export default {
       console.log(getMapLatLng());
 
       switch (action) {
-
+        //TODO: Context menu options
       }
     },
-
-    allRoadLeadToLimerick() {
-      // Change map to light map
-      this.$store.commit('SET_ROUTE_LOADING', 'all_roads')
+    computed: mapState(['routeType']),
+    mounted() {
       setTimeout(() => {
-        this.$store.commit('SET_ROUTE_LOADING', null);
-      }, 3000);
-
-      allRoads();
-      console.log('paddy');
+        this.isSplashLoading = false;
+      }, 1000);
+      createMap();
     }
-  },
-  computed: mapState(['routeType']),
-  mounted() {
-    setTimeout(() => {
-      this.isSplashLoading = false;
-    }, 1000);
-    createMap();
   }
 }
 </script>
@@ -96,31 +85,5 @@ export default {
 /*Removes the scroll bar*/
 html, body {
   overflow: hidden;
-}
-
-.all-roads-limerick-button {
-  visibility: hidden;
-}
-
-.all-roads-limerick-button {
-  transition: opacity 2.5s;
-  opacity: 0.5;
-  bottom: 20px;
-  left: 20px;
-  padding: 16px;
-  background: white;
-  position: absolute;
-  cursor: pointer;
-  z-index: 500;
-}
-
-.all-roads-limerick-button:hover {
-  opacity: 1;
-  transition: opacity 0.3s;
-}
-
-.all-roads-limerick-icon {
-  color: #2d456b;
-  font-size: 3rem;
 }
 </style>

@@ -139,7 +139,6 @@
       reverseMarkers();
     },
     clearRoute() {
-      //TODO: update the search
       this.$store.dispatch('clearNodes');
 
       removeAllMarkers();
