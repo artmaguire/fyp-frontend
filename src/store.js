@@ -28,6 +28,9 @@ export default new Vuex.Store({
     },
     SET_ROUTE_LOADING(state, searchType) {
       state.routeType = searchType;
+    },
+    CLEAR_NODES(state) {
+      state.additionalNodes = [];
     }
   },
   actions: {
@@ -35,6 +38,11 @@ export default new Vuex.Store({
       let start = state.startNode;
       commit('SET_START_NODE', state.endNode);
       commit('SET_END_NODE', start);
+    },
+    clearNodes({ commit }) {
+      commit('SET_START_NODE', {});
+      commit('SET_END_NODE', {});
+      commit('CLEAR_NODES');
     }
   }
 });

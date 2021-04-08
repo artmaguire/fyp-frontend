@@ -1,26 +1,34 @@
 <script>
-import axios from "axios";
-import Swal from "sweetalert2";
+  import axios from "axios";
+  import Swal from "sweetalert2";
 
-import "@fortawesome/fontawesome-free/js/all";
+  import "@fortawesome/fontawesome-free/js/all";
 
-import NodeSearch from "./NodeSearch";
+  import NodeSearch from "./NodeSearch";
 
-import { Algorithms, Flags, Nodes } from "../js/constants"
-import { addDottedLine, addGeoJSON, removeGeoJSON, reverseMarkers, setRouteHistory } from "../js/map";
-import { mapState } from "vuex";
+  import { Algorithms, Flags } from "../js/constants"
+  import {
+    addDottedLine,
+    addGeoJSON,
+    removeAllMarkers,
+    removeGeoJSON,
+    removeRoute,
+    reverseMarkers,
+    setRouteHistory
+  } from "../js/map";
+  import { mapState } from "vuex";
 
-export default {
-  name: 'search',
-  components: {
-    NodeSearch
-  },
-  data: function () {
-    return {
-      searchTypes: [
-        { type: 'driving', icon: 'fa-car', flag: Flags.CAR },
-        { type: 'cycling', icon: 'fa-bicycle', flag: Flags.BIKE },
-        { type: 'walking', icon: 'fa-walking', flag: Flags.FOOT },
+  export default {
+    name: 'search',
+    components: {
+      NodeSearch
+    },
+    data: function () {
+      return {
+        searchTypes: [
+          { type: 'driving', icon: 'fa-car', flag: Flags.CAR },
+          { type: 'cycling', icon: 'fa-bicycle', flag: Flags.BIKE },
+          { type: 'walking', icon: 'fa-walking', flag: Flags.FOOT },
         { type: 'courier', icon: 'fa-truck', flag: Flags.CAR }],
       activeType: {},
       Algorithms: Algorithms,
@@ -56,7 +64,7 @@ export default {
 
       removeGeoJSON();
 
-      this.$store.commit('SET_ROUTE_LOADING', this.activeType.type)
+      this.$store.commit('SET_ROUTE_LOADING', this.activeType.type);
 
       let params = {
         source: this.startNode.lat + ',' + this.startNode.lon,
@@ -64,7 +72,7 @@ export default {
         algorithmType: this.algorithmType,
         visualisation: this.visualisation ? 1 : 0,
         flag: this.activeType.flag
-      }
+      };
 
       let nodes = this.additionalNodes.map(({ data: { lat, lon } }) => {
         return { lat: lat, lon: lon }
@@ -82,7 +90,7 @@ export default {
             text: 'Could not find your route.',
             icon: 'error',
             confirmButtonText: 'Ok'
-          }).then(r => console.log('Not enough nodes'));
+          }).then(() => console.log('Not enough nodes'));
           return;
         }
 
@@ -99,8 +107,8 @@ export default {
             for (let branch of route.branch)
               addGeoJSON(branch.route, branch.cost, branch.distance);
 
-          time += route.time
-          distance += route.distance
+          time += route.time;
+          distance += route.distance;
           downloadRoute.push(route.route);
 
           if (route.history)
@@ -129,6 +137,16 @@ export default {
     reverseWayPoints() {
       this.$store.dispatch('swapNodes');
       reverseMarkers();
+    },
+    clearRoute() {
+      //TODO: update the search
+      this.$store.dispatch('clearNodes');
+
+      removeAllMarkers();
+      removeRoute();
+      removeGeoJSON();
+
+      this.routeDetails = false;
     },
     setRouteDetails(distance, time) {
       this.routeDetails = true;
@@ -197,12 +215,15 @@ export default {
           <NodeSearch :id="-1" :index="-1" :node-data="endNode"></NodeSearch>
         </div>
         <div class="sv-item">
-          <button disabled class="button add-node" title="Add location" @click="addNode"
+          <button @click="addNode" class="button add-node" title="Add location"
                   :disabled="additionalNodes.length >= 5">
             <i class="fa fa-plus"></i>
           </button>
           <button class="button reverse-waypoints" title="Reverse waypoints" @click="reverseWayPoints">
             <i class="fa fa-retweet"></i>
+          </button>
+          <button @click="clearRoute" class="button reverse-waypoints" title="Clear route">
+            <i class="fa fa-times"></i>
           </button>
           <div id="search-btn">
             <button id="go-button" title="Find route" class="button is-rounded" @click="goButtonClick">
@@ -386,7 +407,8 @@ export default {
   padding: 4px;
   font-size: 1.4rem;
   height: 100%;
-  margin: 4px auto 4px 8px;
+  display: inline;
+  margin: -1px;
 }
 
 #search-btn {

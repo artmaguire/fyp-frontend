@@ -266,7 +266,7 @@ export function reverseMarkers() {
     addMarker(endMarker.name, endMarker['_latlng']['lat'], endMarker['_latlng']['lng'], 0, 0);
 }
 
-function removeRoute() {
+export function removeRoute() {
   if (!routingControl)
     return;
 
@@ -415,9 +415,11 @@ function routeHistoryNext(count = 1) {
   }
 }
 
-function removeAllMarkers() {
+export function removeAllMarkers() {
   for (let markerId of markerMap.keys())
     map.removeLayer(markerMap.get(markerId));
+
+  markerMap.clear();
 }
 
 export function allRoads() {
