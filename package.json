@@ -6,7 +6,7 @@
     "build": "webpack --config webpack.prod.js --progress",
     "serve": "webpack serve --config webpack.dev.js --hot --inline --progress",
     "serve-proxy": "webpack serve --config webpack.proxy.js --hot --inline --progress",
-    "bundle-report": "webpack-bundle-analyzer --port 4200 compilation-stats.json"
+    "bundle-report": "webpack --config webpack.stat.js --progress"
   },
   "dependencies": {
     "@babel/core": "^7.13.14",
