@@ -5,12 +5,12 @@ export default {
   data: function () {
     return {
       loadingTitle: 'Direction Finding Using OpenStreetMap'
-    }
+    };
   },
   props: {
     active: Boolean
   }
-}
+};
 </script>
 
 <template>

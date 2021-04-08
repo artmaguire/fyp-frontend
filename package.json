@@ -6,7 +6,8 @@
     "build": "webpack --config webpack.prod.js --progress",
     "serve": "webpack serve --config webpack.dev.js --hot --inline --progress",
     "serve-proxy": "webpack serve --config webpack.proxy.js --hot --inline --progress",
-    "bundle-report": "webpack --config webpack.stat.js --progress"
+    "bundle-report": "webpack --config webpack.stat.js --progress",
+    "lint": "eslint src/**"
   },
   "dependencies": {
     "@babel/core": "^7.13.14",
@@ -28,6 +29,9 @@
     "copy-webpack-plugin": "^8.1.1",
     "css-loader": "^5.2.0",
     "css-minimizer-webpack-plugin": "^1.3.0",
+    "eslint": "^7.23.0",
+    "eslint-plugin-vue": "^7.8.0",
+    "eslint-webpack-plugin": "^2.5.3",
     "file-loader": "^6.2.0",
     "friendly-errors-webpack-plugin": "^1.7.0",
     "html-webpack-plugin": "^5.3.1",

@@ -13,7 +13,7 @@ export default {
       isSearching: false,
       searchTimeout: {},
       searchResults: []
-    }
+    };
   },
   props: { id: Number, index: Number, nodeData: Object },
   methods: {
@@ -32,7 +32,7 @@ export default {
       }, 250, data);
     },
     searchSelected: function (result) {
-      removeGeoJSON()
+      removeGeoJSON();
       addMarker(result.display_place, result.lat, result.lon, this.id, this.index);
 
       switch (this.index) {
@@ -59,7 +59,7 @@ export default {
     },
     searchChangeEnter: function () {
       if (this.searchQuery === '' || !this.searchResults.length)
-        return
+        return;
 
       this.searchSelected(this.searchResults[0]);
       this.closeSearchList();
@@ -77,21 +77,21 @@ export default {
     label() {
       switch (this.index) {
         case 0:
-          return 'S'
+          return 'S';
         case -1:
-          return 'E'
+          return 'E';
         default:
-          return this.index
+          return this.index;
       }
     },
     placeholder() {
       switch (this.index) {
         case 0:
-          return 'Start'
+          return 'Start';
         case -1:
-          return 'End'
+          return 'End';
         default:
-          return 'Via'
+          return 'Via';
       }
     }
   },
@@ -100,7 +100,7 @@ export default {
       this.searchQuery = newValue.display_place || '';
     }
   }
-}
+};
 </script>
 
 <template>

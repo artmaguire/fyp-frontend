@@ -6,8 +6,8 @@ import "@fortawesome/fontawesome-free/js/all";
 
 import NodeSearch from "./NodeSearch";
 
-import { Algorithms, Flags } from "../js/constants"
-import { addDottedLine, addGeoJSON, removeAllMarkers, removeGeoJSON, removeRoute, reverseMarkers, setRouteHistory } from "../js/map";
+import { Algorithms, Flags } from "../js/constants";
+import { addDottedLine, addGeoJSON, removeAllMarkers, removeGeoJSON, removeRoute, reverseMarkers } from "../js/map";
 import { mapState } from "vuex";
 
 export default {
@@ -33,7 +33,7 @@ export default {
       routeDetails: false,
       expand: false,
       hideSearchView: false
-    }
+    };
   },
   methods: {
     setActiveType(type) {
@@ -67,7 +67,7 @@ export default {
       };
 
       let nodes = this.additionalNodes.map(({ data: { lat, lon } }) => {
-        return { lat: lat, lon: lon }
+        return { lat: lat, lon: lon };
       });
       if (nodes.length)
         params.additionalNodes = nodes;
@@ -104,7 +104,8 @@ export default {
           downloadRoute.push(route.route);
 
           if (route.history)
-            setRouteHistory(route.history);
+            console.log(route.history);
+            // setRouteHistory(route.history);
           else
             addGeoJSON(route.route, 0, 0, 0, 0, "crimson", 3);
         }
@@ -171,7 +172,7 @@ export default {
     this.activeType = this.searchTypes[0];
   },
   computed: mapState(['startNode', 'endNode', 'additionalNodes'])
-}
+};
 </script>
 
 <template>

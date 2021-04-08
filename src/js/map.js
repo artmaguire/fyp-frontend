@@ -2,7 +2,7 @@ import L from 'leaflet';
 import 'leaflet-easybutton';
 import Swal from 'sweetalert2';
 
-import 'leaflet/dist/leaflet.css'
+import 'leaflet/dist/leaflet.css';
 import { Nodes } from "./constants";
 
 // Leaflet JS OpenStreetMapMapbox Map
@@ -165,7 +165,7 @@ export function createMap() {
     let lastMapBounds = getPreviousMapBounds();
     if (lastMapBounds) {
       let bounds = lastMapBounds.split(",");
-      map.fitBounds([[parseFloat(bounds[1]), parseFloat(bounds[0])], [parseFloat(bounds[3]), parseFloat(bounds[2])]])
+      map.fitBounds([[parseFloat(bounds[1]), parseFloat(bounds[0])], [parseFloat(bounds[3]), parseFloat(bounds[2])]]);
     }
   }
 
@@ -290,7 +290,7 @@ function panToMarkers() {
 
 // Get the lat, lon for a given marker
 function getCoords(marker) {
-  return L.latLng(marker['_latlng']['lat'], marker['_latlng']['lng'])
+  return L.latLng(marker['_latlng']['lat'], marker['_latlng']['lng']);
 }
 
 export function displayRoute(additionalNodes) {
@@ -340,17 +340,6 @@ export function getBoundsLngLat() {
   return map.getBounds().toBBoxString();
 }
 
-function changeMapToLight() {
-  // Center of Ireland Coords - 53.4239° N, 7.9407° W
-  map.setView(L.latLng(53.4239, -7.9407), 7.5, {
-    "animate": true,
-    "pan": {
-      "duration": 1
-    }
-  });
-  light.addTo(map);
-}
-
 let routeLayerGroup;
 
 const colors = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
@@ -383,8 +372,8 @@ export function addGeoJSON(routeGeoJSON, cost = 0, totalCost = 0, distance = 0, 
 export function removeGeoJSON() {
   routeLayerGroup.clearLayers();
 
-  routeHistory = [];
-  routeHistoryIndex = 0;
+/*  routeHistory = [];
+  routeHistoryIndex = 0;*/
 }
 
 export function addDottedLine(LatLngArray) {
@@ -392,15 +381,15 @@ export function addDottedLine(LatLngArray) {
   routeLayerGroup.addLayer(polyline);
 }
 
-let routeHistory = [];
-let routeHistoryIndex = 0;
+/*let routeHistory = [];
+let routeHistoryIndex = 0;*/
 
-export function setRouteHistory(history) {
+/*export function setRouteHistory(history) {
   routeHistory = history;
   routeHistoryIndex = 0;
-}
+}*/
 
-function routeHistoryNext(count = 1) {
+/*function routeHistoryNext(count = 1) {
   for (let i = 0; i < count; i++) {
     if (routeHistoryIndex >= routeHistory.length) {
       console.log("FOUND TARGET!!!");
@@ -413,21 +402,11 @@ function routeHistoryNext(count = 1) {
         node.distance_minutes, null, 3);
     routeHistoryIndex++;
   }
-}
+}*/
 
 export function removeAllMarkers() {
   for (let markerId of markerMap.keys())
     map.removeLayer(markerMap.get(markerId));
 
   markerMap.clear();
-}
-
-export function allRoads() {
-  removeAllMarkers();
-  removeRoute();
-  removeGeoJSON();
-  changeMapToLight();
-
-  for (let road of all_roads)
-    addGeoJSON(road.route, 0, 0, 0, 0, '#2d456b', 1, false);
 }

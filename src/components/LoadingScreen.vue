@@ -4,7 +4,7 @@ export default {
   data: function () {
     return {
       loadingTitle: 'Finding Route...'
-    }
+    };
   },
   methods: {
     cancelRoute() {
@@ -13,7 +13,7 @@ export default {
     }
   },
   props: { type: String }
-}
+};
 </script>
 
 <template>

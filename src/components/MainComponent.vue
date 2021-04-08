@@ -25,7 +25,7 @@ export default {
         { title: "Directions To Here", value: 2 },
         { title: "Directions Via Here", value: 3 },
       ]
-    }
+    };
   },
   methods: {
     contextMenuAction(action) {
@@ -45,7 +45,7 @@ export default {
     }, 1000);
     createMap();
   }
-}
+};
 </script>
 
 <template>

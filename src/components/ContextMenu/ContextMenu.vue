@@ -13,7 +13,7 @@
 
 <script>
 import { createPopper } from '@popperjs/core';
-import ClickOutside from 'vue-click-outside'
+import ClickOutside from 'vue-click-outside';
 
 export default {
   props: {
