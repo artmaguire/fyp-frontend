@@ -196,7 +196,7 @@ function locateUser() {
     .on('locationerror', () => {
       Swal.fire({
         title: 'Location Denied',
-        text: 'To enable location services, Click allow location access in the browsers search bar.',
+        text: 'Location is disabled for this website.',
         icon: 'error',
         confirmButtonText: 'Ok'
       }).then(() => {
@@ -316,21 +316,24 @@ export function displayRoute(additionalNodes) {
   }).addTo(map);
 }
 
-// Saves current map layer to cookie when the user leaves the page
-window.onbeforeunload = () => {
-  let mapId = 0;
-  for (let m in map._layers) {
-    mapId = m;
-  }
-
+function setBaseMapCookie() {
+  let mapId = Object.entries(map._layers)[0][0];
   let mapCookieString = "baseMap=";
   for (let m of maps) {
     if (m[1].options['id'] === map._layers[mapId].options['id']) {
       document.cookie = mapCookieString += m[0];
     }
   }
+}
 
+function setLastSearchCookie() {
   document.cookie = "lastSearch=" + getBoundsLngLat();
+}
+
+// Saves current map layer to cookie when the user leaves the page
+window.onbeforeunload = () => {
+  setBaseMapCookie();
+  setLastSearchCookie();
 };
 
 export function getBoundsLngLat() {
