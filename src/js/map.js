@@ -170,18 +170,11 @@ export function createMap() {
   }
 
   // Button for users location
-  L.easyButton('<div title="Your location"><i class="fas fa-map-marker-alt"</i></div>', function (btn, map) {
+  L.easyButton('<div title="Your location"><i class="fas fa-map-marker-alt"</i></div>', (btn, map) => {
     if (userLocation.length !== 0) {
       map.flyTo([userLocation[0], userLocation[1]], 14);
     } else {
-      Swal.fire({
-        title: 'Location Denied',
-        text: 'To enable location services, Click allow location access in the browsers search bar.',
-        icon: 'error',
-        confirmButtonText: 'Ok'
-      }).then(r => {
-        locateUser();
-      });
+      locateUser();
     }
   }, { position: 'bottomright' }).addTo(map);
 
@@ -196,11 +189,19 @@ let geoJSONLayer = null;
 
 function locateUser() {
   map.locate({ enableHighAccuracy: true })
-    .on('locationfound', function (e) {
+    .on('locationfound', e => {
       userLocation = [e.latitude, e.longitude];
       map.setView([e.latitude, e.longitude], 12);
     })
-    .on('locationerror', function (e) {
+    .on('locationerror', () => {
+      Swal.fire({
+        title: 'Location Denied',
+        text: 'To enable location services, Click allow location access in the browsers search bar.',
+        icon: 'error',
+        confirmButtonText: 'Ok'
+      }).then(() => {
+        locateUser();
+      });
     });
 }
 
