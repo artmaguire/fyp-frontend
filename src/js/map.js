@@ -3,12 +3,13 @@ import 'leaflet-easybutton';
 import Swal from 'sweetalert2';
 
 import 'leaflet/dist/leaflet.css'
+import { Nodes } from "./constants";
 
 // Leaflet JS OpenStreetMapMapbox Map
 
 // Mapbox tokens for different maps
 const mapboxAccessToken = 'pk.eyJ1IjoiYXJ0bWFndWlyZSIsImEiOiJja2poYmxqMmUzZDdnMnRtdGUwbXVsMjgyIn0.fptDfptTcoror2IzzbBchg';
-const mapBoxURL = `https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=${mapboxAccessToken}`;
+const mapBoxURL = `https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=${ mapboxAccessToken }`;
 const mapBoxAttribute = 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>';
 
 // Different MapBox maps including: Streets-V11, Dark-V10, Light-V10, Satellite-V11
@@ -63,7 +64,7 @@ const irelandView = {
   "x": 53.417717,
   "y": -7.945862,
   "zoom": 7
-}
+};
 
 // Custom markers
 const markerIcons = {
@@ -129,7 +130,7 @@ let map = {};
 let currentLatLng = {};
 
 // Asks for user location
-let userLocation = []
+let userLocation = [];
 
 export function createMap() {
   map = L.map('mapid', {
@@ -155,7 +156,7 @@ export function createMap() {
   if (defaultMap === null) {
     streets.addTo(map);
   } else {
-    const baseMap = getPreviousMap()
+    const baseMap = getPreviousMap();
     baseMaps[baseMap].addTo(map);
   }
 
@@ -182,7 +183,7 @@ export function createMap() {
         locateUser();
       });
     }
-  }, {position: 'bottomright'}).addTo(map);
+  }, { position: 'bottomright' }).addTo(map);
 
   routeLayerGroup = L.layerGroup().addTo(map);
 }
@@ -194,9 +195,9 @@ let routingControl = null;
 let geoJSONLayer = null;
 
 function locateUser() {
-  map.locate({enableHighAccuracy: true})
+  map.locate({ enableHighAccuracy: true })
     .on('locationfound', function (e) {
-      userLocation = [e.latitude, e.longitude]
+      userLocation = [e.latitude, e.longitude];
       map.setView([e.latitude, e.longitude], 12);
     })
     .on('locationerror', function (e) {
@@ -235,7 +236,7 @@ export function addMarker(name, lat, lon, key, id) {
   }
 
   let icon = markerIcons[id];
-  let marker = L.marker([lat, lon], {icon: icon}).addTo(map);
+  let marker = L.marker([lat, lon], { icon: icon }).addTo(map);
 
   marker.bindPopup("<b>" + name).openPopup();
   marker.name = name;
@@ -254,10 +255,9 @@ export function removeMarker(markerId) {
   map.removeLayer(marker);
 }
 
-export function reverseMarkers(startName, endName) {
+export function reverseMarkers() {
   let startMarker = markerMap.get(0);
   let endMarker = markerMap.get(-1);
-  console.log(startMarker);
 
   if (startMarker)
     addMarker(startMarker.name, startMarker['_latlng']['lat'], startMarker['_latlng']['lng'], -1, -1);
@@ -284,7 +284,7 @@ function panToNode(lat, lon) {
 
 function panToMarkers() {
   let group = new L.featureGroup(Array.from(markerMap.values()));
-  map.fitBounds(group.getBounds(), {padding: [100, 100]});
+  map.fitBounds(group.getBounds(), { padding: [200, 200] });
 }
 
 // Get the lat, lon for a given marker
@@ -294,17 +294,17 @@ function getCoords(marker) {
 
 export function displayRoute(additionalNodes) {
   // Clears any existing routes
-  removeRoute()
+  removeRoute();
 
-  let waypoints = []
-  waypoints.push(getCoords(markerMap.get(Nodes.START)))
+  let waypoints = [];
+  waypoints.push(getCoords(markerMap.get(Nodes.START)));
 
   for (let id of additionalNodes) {
     let marker = markerMap.get(id);
     waypoints.push(getCoords(marker));
   }
 
-  waypoints.push(getCoords(markerMap.get(Nodes.END)))
+  waypoints.push(getCoords(markerMap.get(Nodes.END)));
 
   routingControl = L.Routing.control({
     router: L.Routing.mapbox(mapboxAccessToken),
@@ -362,29 +362,29 @@ const colors = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
 
 export function addGeoJSON(routeGeoJSON, cost = 0, totalCost = 0, distance = 0, distanceMinutes = 0, color = null, weight = 1, popup = true) {
   if (!color)
-    color = colors[Math.floor(Math.random() * colors.length)]
+    color = colors[Math.floor(Math.random() * colors.length)];
 
   geoJSONLayer = L.geoJSON(routeGeoJSON, {
     onEachFeature: popup ? (feature, layer) => {
-      layer.bindPopup(`Cost: ${Math.round(cost * 100) / 100}, TCost: ${Math.round(totalCost * 100) / 100}, #
-            D: ${Math.round(distance * 100) / 100}km, DM: ${Math.round(distanceMinutes * 100) / 100}m`);
+      layer.bindPopup(`Cost: ${ Math.round(cost * 100) / 100 }, TCost: ${ Math.round(totalCost * 100) / 100 }, #
+            D: ${ Math.round(distance * 100) / 100 }km, DM: ${ Math.round(distanceMinutes * 100) / 100 }m`);
     } : null,
     style: () => {
-      return {color: color, weight: weight};
+      return { color: color, weight: weight };
     }
   });
   routeLayerGroup.addLayer(geoJSONLayer);
 }
 
 export function removeGeoJSON() {
-  routeLayerGroup.clearLayers()
+  routeLayerGroup.clearLayers();
 
   routeHistory = [];
   routeHistoryIndex = 0;
 }
 
 export function addDottedLine(LatLngArray) {
-  let polyline = L.polyline(LatLngArray, {color: 'slategrey', dashArray: '5,10', weight: 2});
+  let polyline = L.polyline(LatLngArray, { color: 'slategrey', dashArray: '5,10', weight: 2 });
   routeLayerGroup.addLayer(polyline);
 }
 
@@ -402,7 +402,7 @@ function routeHistoryNext(count = 1) {
       console.log("FOUND TARGET!!!");
       return;
     }
-    let nodes = routeHistory[routeHistoryIndex]
+    let nodes = routeHistory[routeHistoryIndex];
 
     for (let node of nodes)
       addGeoJSON(node.geojson, node.cost, node.total_cost, node.distance,
