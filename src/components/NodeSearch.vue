@@ -51,7 +51,7 @@ export default {
     },
     deleteSearch: function () {
       if (this.id > 0)
-        this.$store.commit('REMOVE_NODE', this.index-1);
+        this.$store.commit('REMOVE_NODE', this.index - 1);
       else
         this.searchQuery = '';
 
@@ -109,18 +109,18 @@ export default {
       <strong class="start-end-strong">{{ label }}</strong>
     </div>
     <div class="sv-input sv-item control has-icons-right">
-      <input v-on:keyup.enter="searchChangeEnter" v-model.trim="searchQuery" @keyup="searchChange"
-             @focus="isSearching = true"
-             @blur="closeSearchList" class="input is-rounded" autocomplete="off"
-             type="text" :placeholder="placeholder">
+      <input v-model.trim="searchQuery" :placeholder="placeholder" autocomplete="off"
+             class="input is-rounded"
+             type="text" @blur="closeSearchList" @focus="isSearching = true"
+             @keyup="searchChange" v-on:keyup.enter="searchChangeEnter">
       <span class="icon is-small is-right">
-                          <a @click="deleteSearch" class="delete is-small"></a>
+                          <a class="delete is-small" @click="deleteSearch"></a>
                         </span>
     </div>
     <div class="sv-suggestions-box-wrapper">
       <div v-if="isSearching" class="card sv-suggestions-box">
         <ul class="menu-list">
-          <li v-for="result in searchResults" @click="searchSelected(result)" class="search-menu-item">
+          <li v-for="result in searchResults" class="search-menu-item" @click="searchSelected(result)">
             <span class="">{{ result.display_place }}</span>
             <br>
             <span class="search-menu-item-addr">{{ result.display_address }}</span>

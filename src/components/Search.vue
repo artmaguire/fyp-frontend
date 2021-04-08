@@ -1,34 +1,26 @@
 <script>
-  import axios from "axios";
-  import Swal from "sweetalert2";
+import axios from "axios";
+import Swal from "sweetalert2";
 
-  import "@fortawesome/fontawesome-free/js/all";
+import "@fortawesome/fontawesome-free/js/all";
 
-  import NodeSearch from "./NodeSearch";
+import NodeSearch from "./NodeSearch";
 
-  import { Algorithms, Flags } from "../js/constants"
-  import {
-    addDottedLine,
-    addGeoJSON,
-    removeAllMarkers,
-    removeGeoJSON,
-    removeRoute,
-    reverseMarkers,
-    setRouteHistory
-  } from "../js/map";
-  import { mapState } from "vuex";
+import { Algorithms, Flags } from "../js/constants"
+import { addDottedLine, addGeoJSON, removeAllMarkers, removeGeoJSON, removeRoute, reverseMarkers, setRouteHistory } from "../js/map";
+import { mapState } from "vuex";
 
-  export default {
-    name: 'search',
-    components: {
-      NodeSearch
-    },
-    data: function () {
-      return {
-        searchTypes: [
-          { type: 'driving', icon: 'fa-car', flag: Flags.CAR },
-          { type: 'cycling', icon: 'fa-bicycle', flag: Flags.BIKE },
-          { type: 'walking', icon: 'fa-walking', flag: Flags.FOOT },
+export default {
+  name: 'search',
+  components: {
+    NodeSearch
+  },
+  data: function () {
+    return {
+      searchTypes: [
+        { type: 'driving', icon: 'fa-car', flag: Flags.CAR },
+        { type: 'cycling', icon: 'fa-bicycle', flag: Flags.BIKE },
+        { type: 'walking', icon: 'fa-walking', flag: Flags.FOOT },
         { type: 'courier', icon: 'fa-truck', flag: Flags.CAR }],
       activeType: {},
       Algorithms: Algorithms,
@@ -183,7 +175,7 @@
 </script>
 
 <template>
-  <div v-bind:class="{ 'show-search-view': hideSearchView }" class="search-view">
+  <div class="search-view" v-bind:class="{ 'show-search-view': hideSearchView }">
     <div class="box search-view-content">
       <div class="search-view-header">
         <p>Direction Finding Using OSM</p>
@@ -192,10 +184,10 @@
         <div class="card">
           <div id="transport-icons">
             <ul>
-              <li v-for="searchType in searchTypes" @click="setActiveType(searchType)" v-bind:title="searchType.type"
-                  class="sv-icon"
-                  v-bind:class="{ 'sv-icon-active': activeType.type === searchType.type }">
-                <i class="fas" :class="searchType.icon"></i>
+              <li v-for="searchType in searchTypes" class="sv-icon" v-bind:class="{ 'sv-icon-active': activeType.type === searchType.type }"
+                  v-bind:title="searchType.type"
+                  @click="setActiveType(searchType)">
+                <i :class="searchType.icon" class="fas"></i>
               </li>
               <!-- TODO: Add more gifs for bus and truck? -->
             </ul>
@@ -204,8 +196,8 @@
         <div class="sv-inputs">
           <!-- Templating for search nodes, done by Vue Component -->
           <NodeSearch :id="0" :index="0" :node-data="startNode"></NodeSearch>
-          <NodeSearch v-for="(child, index) in additionalNodes" :id="child.id" :index="index+1" :node-data="child.data"
-                      :key="child.id">
+          <NodeSearch v-for="(child, index) in additionalNodes" :id="child.id" :key="child.id" :index="index+1"
+                      :node-data="child.data">
             <hr class="search-inputs-hr">
           </NodeSearch>
           <hr class="search-inputs-hr">
@@ -214,18 +206,18 @@
           <NodeSearch :id="-1" :index="-1" :node-data="endNode"></NodeSearch>
         </div>
         <div class="sv-item">
-          <button @click="addNode" class="button add-node" title="Add location"
-                  :disabled="additionalNodes.length >= 5">
+          <button :disabled="additionalNodes.length >= 5" class="button add-node" title="Add location"
+                  @click="addNode">
             <i class="fa fa-plus"></i>
           </button>
           <button class="button reverse-waypoints" title="Reverse waypoints" @click="reverseWayPoints">
             <i class="fa fa-retweet"></i>
           </button>
-          <button @click="clearRoute" class="button reverse-waypoints" title="Clear route">
+          <button class="button reverse-waypoints" title="Clear route" @click="clearRoute">
             <i class="fa fa-times"></i>
           </button>
           <div id="search-btn">
-            <button id="go-button" title="Find route" class="button is-rounded" @click="goButtonClick">
+            <button id="go-button" class="button is-rounded" title="Find route" @click="goButtonClick">
               <div class="icon is-small">
                 <i class="fa fa-search"></i>
               </div>
@@ -233,13 +225,13 @@
           </div>
         </div>
 
-        <div class="route-details" v-if="routeDetails">
+        <div v-if="routeDetails" class="route-details">
           <i class="route-stats route-stats-icon fas fa-route"></i>
           <strong class="route-stats">{{ distance }} km</strong>
           <strong class="route-stats"><-></strong>
           <strong class="route-stats">{{ time }}</strong>
           <i class="route-stats route-stats-icon fas fa-clock"></i>
-          <a title="Export Route" class="route-details-download" @click="downloadRoute"><i
+          <a class="route-details-download" title="Export Route" @click="downloadRoute"><i
               class="route-download-icon fas fa-file-export"></i></a>
         </div>
 
@@ -247,43 +239,43 @@
           <hr style="margin: 1px">
           <div class="algorithm-radio-buttons">
             <strong class="start-end-strong">Select an algorithm</strong>
-            <div style="padding-left: 24px;" class="control">
+            <div class="control" style="padding-left: 24px;">
               <label class="radio">
-                <input type="radio" :value="Algorithms.DIJKSTRA" v-model="algorithmType">
+                <input v-model="algorithmType" :value="Algorithms.DIJKSTRA" type="radio">
                 Dijkstra
               </label>
               <br>
               <label class="radio">
-                <input type="radio" :value="Algorithms.BI_DIJKSTRA" v-model="algorithmType">
+                <input v-model="algorithmType" :value="Algorithms.BI_DIJKSTRA" type="radio">
                 Bi-directional Dijkstra
               </label>
               <br>
               <label class="radio">
-                <input type="radio" :value="Algorithms.ASTAR" v-model="algorithmType">
+                <input v-model="algorithmType" :value="Algorithms.ASTAR" type="radio">
                 A*
               </label>
               <br>
               <label class="radio">
-                <input type="radio" :value="Algorithms.BI_ASTAR" v-model="algorithmType" checked>
+                <input v-model="algorithmType" :value="Algorithms.BI_ASTAR" checked type="radio">
                 Bi-directional A*
               </label>
             </div>
           </div>
           <div id="visualisation-checkbox" class="algorithm-radio-buttons">
             <label class="checkbox">
-              <input type="checkbox" v-model="visualisation">
+              <input v-model="visualisation" type="checkbox">
               <strong class="start-end-strong">Visualisation</strong>
             </label>
           </div>
         </div>
         <div class="algorithm-radio-dropdown">
-          <button class="button is-rounded is-small expand-search-view-button phone-expand" @click="expandSearchView"
-                  title="Additional Settings">
+          <button class="button is-rounded is-small expand-search-view-button phone-expand" title="Additional Settings"
+                  @click="expandSearchView">
                         <span v-show="expand">
-                            <i style="color:crimson" class="fas fa-chevron-up fa-lg"></i>
+                            <i class="fas fa-chevron-up fa-lg" style="color:crimson"></i>
                         </span>
             <span v-show="!expand">
-                            <i style="color:crimson" class="fas fa-chevron-down fa-lg"></i>
+                            <i class="fas fa-chevron-down fa-lg" style="color:crimson"></i>
                         </span>
           </button>
         </div>
