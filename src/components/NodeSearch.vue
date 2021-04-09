@@ -52,8 +52,12 @@ export default {
     deleteSearch: function () {
       if (this.id > 0)
         this.$store.commit('REMOVE_NODE', this.index - 1);
-      else
+      else {
         this.searchQuery = '';
+        this.searchResults = [];
+        clearTimeout(this.searchTimeout);
+        this.isSearching = false;
+      }
 
       removeMarker(this.id);
     },
