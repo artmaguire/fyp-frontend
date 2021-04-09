@@ -13,7 +13,12 @@ rules: {
   semi: warn,
   no-unreachable: error,
   no-alert: error,
-  no-console: warn
+  no-console: warn,
+  sort-imports: [ "warn", { "ignoreCase": true } ],
+  indent: [ "warn", 2, { "SwitchCase": 1 } ],
+  no-trailing-spaces: warn,
+  no-multi-spaces: warn,
+  vue/comment-directive: 0
 }
 ignorePatterns:
   - "webpack*"

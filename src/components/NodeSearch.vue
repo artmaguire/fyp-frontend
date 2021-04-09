@@ -32,9 +32,6 @@ export default {
       }, 250, data);
     },
     searchSelected: function (result) {
-      removeGeoJSON();
-      addMarker(result.display_place, result.lat, result.lon, this.id, this.index);
-
       switch (this.index) {
         case 0:
           return this.$store.commit('SET_START_NODE', result);
@@ -59,6 +56,7 @@ export default {
         this.isSearching = false;
       }
 
+      removeGeoJSON();
       removeMarker(this.index);
     },
     searchChangeEnter: function () {
@@ -67,6 +65,13 @@ export default {
 
       this.searchSelected(this.searchResults[0]);
       this.closeSearchList();
+    },
+    createNode: function () {
+      if (this.nodeData.display_place) {
+        this.searchQuery = this.nodeData.display_place || '';
+        removeGeoJSON();
+        addMarker(this.nodeData.display_place, this.nodeData.lat, this.nodeData.lon, this.id, this.index);
+      }
     }
   },
   sockets: {
@@ -100,9 +105,12 @@ export default {
     }
   },
   watch: {
-    nodeData(newValue) {
-      this.searchQuery = newValue.display_place || '';
+    nodeData() {
+      this.createNode();
     }
+  },
+  created() {
+    this.createNode();
   }
 };
 </script>

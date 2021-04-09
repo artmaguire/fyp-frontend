@@ -30,58 +30,45 @@ export default {
           FROM: 1,
           TO: 2,
           VIA: 3
-        }),
-      searchResult: ""
+        })
     };
   },
   methods: {
     contextMenuAction(action) {
       this.$refs.menu.close();
-      console.log(action);
-      console.log(getMapLatLng());
 
-        let data = {
-          lat: getMapLatLng().lat,
-          lon: getMapLatLng().lng
-        };
+      let data = {
+        action: action,
+        lat: getMapLatLng().lat,
+        lon: getMapLatLng().lng
+      };
 
-        switch (action) {
-          case this.ContextMenuActions.FROM:
-            console.log("from");
-            this.$socket.client.emit('reverse_geoname_search', data);
-            console.log(this.searchResult);
-            // this.$store.commit('SET_START_NODE', result);
-            // TODO: geoname reverse lookup, add ot the start point, override if already exists
-            break;
-          case this.ContextMenuActions.TO:
-            this.$socket.client.emit('reverse_geoname_search', data);
-            // TODO: geoname reverse lookup, add ot the end point, override if already exists
-            console.log("to");
-            // this.$store.commit('SET_END_NODE', result);
-            break;
-          case this.ContextMenuActions.VIA:
-            this.$socket.client.emit('reverse_geoname_search', data);
-            // TODO: geoname reverse lookup, add as additional point, add onto additional nodes
-            console.log("via");
-            break;
-          default:
-            console.log(action);
-        }
+      this.$socket.client.emit('reverse_geoname_search', data);
+    }
+  },
+  computed: mapState(['routeType']),
+  mounted() {
+    setTimeout(() => {
+      this.isSplashLoading = false;
+    }, 1000);
+    createMap();
+  },
+  sockets: {
+    reverse_geoname_result(data) {
+      switch (data.action) {
+        case this.ContextMenuActions.FROM:
+          this.$store.commit('SET_START_NODE', data.geoname);
+          break;
+        case this.ContextMenuActions.TO:
+          this.$store.commit('SET_END_NODE', data.geoname);
+          break;
+        case this.ContextMenuActions.VIA:
+          this.$store.commit('PUSH_NODE', { id: Math.random(), data: data.geoname });
+          break;
       }
-    },
-    computed: mapState(['routeType']),
-    mounted() {
-      setTimeout(() => {
-        this.isSplashLoading = false;
-      }, 1000);
-      createMap();
-    },
-    sockets: {
-      reverse_geoname_search(data) {
-        this.searchResult = data.geonames;
-      }
-    },
-  };
+    }
+  },
+};
 </script>
 
 <template>

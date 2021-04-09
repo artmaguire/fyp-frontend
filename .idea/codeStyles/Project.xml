@@ -61,6 +61,21 @@
       <indentOptions>
         <option name="CONTINUATION_INDENT_SIZE" value="2" />
       </indentOptions>
+      <arrangement>
+        <rules>
+          <section>
+            <rule>
+              <match>
+                <AND>
+                  <NAME>vue</NAME>
+                  <XML_ATTRIBUTE />
+                  <XML_NAMESPACE>v-bind:</XML_NAMESPACE>
+                </AND>
+              </match>
+            </rule>
+          </section>
+        </rules>
+      </arrangement>
     </codeStyleSettings>
   </code_scheme>
 </component>
