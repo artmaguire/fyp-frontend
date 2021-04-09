@@ -25,6 +25,4 @@ ignorePatterns:
   - "public/"
   - "dummy*"
   - "babel*"
-  - "*.png"
-  - "*.gif"
-  - "*.ico"
+  - "src/assets/"
