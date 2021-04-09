@@ -1,7 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { VueLoaderPlugin } = require('vue-loader');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
 
@@ -11,7 +10,7 @@ module.exports = {
   output: {
     path: __dirname + '/public',
     publicPath: '/',
-    filename: '[name].bundle.js'
+    filename: '[name].[contenthash].js'
   },
   module: {
     rules: [
@@ -64,9 +63,10 @@ module.exports = {
       inject: 'body',
       favicon: './src/assets/favicon_io/favicon.ico'
     }),
-    new MiniCssExtractPlugin(),
+    new MiniCssExtractPlugin({
+      filename: '[name].[contenthash].css'
+    }),
     new VueLoaderPlugin(),
-    new CleanWebpackPlugin(),
     new CopyPlugin({
       patterns: [
         { from: 'src/assets/markers', to: 'images/markers' },
