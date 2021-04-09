@@ -1,17 +1,18 @@
 import Vue from 'vue';
 import VueSocketIOExt from 'vue-socket.io-extended';
-import { io } from "socket.io-client"
+import { io } from "socket.io-client";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
-import store from './store'
-
+import store from './store';
 import MainComponent from './components/MainComponent';
+import './js/map.js';
 
 import '@fontsource/lato';
 
-import './js/map.js';
+Vue.config.productionTip = false;
 
+Vue.component('font-awesome-icon', FontAwesomeIcon);
 
-Vue.config.productionTip = false
 
 // Websocket to communicate with Flask, for searching geonames
 const socket = io();

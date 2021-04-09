@@ -2,7 +2,7 @@ import L from 'leaflet';
 import 'leaflet-easybutton';
 import Swal from 'sweetalert2';
 
-import 'leaflet/dist/leaflet.css'
+import 'leaflet/dist/leaflet.css';
 import { Nodes } from "./constants";
 
 // Leaflet JS OpenStreetMapMapbox Map
@@ -134,8 +134,10 @@ let userLocation = [];
 
 export function createMap() {
   map = L.map('mapid', {
+    worldCopyJump: true,
     zoomDelta: 0.5,
-    zoomSnap: 0
+    zoomSnap: 0,
+    minZoom: 3
   }).setView([irelandView.x, irelandView.y], irelandView.zoom);
 
 
@@ -165,12 +167,12 @@ export function createMap() {
     let lastMapBounds = getPreviousMapBounds();
     if (lastMapBounds) {
       let bounds = lastMapBounds.split(",");
-      map.fitBounds([[parseFloat(bounds[1]), parseFloat(bounds[0])], [parseFloat(bounds[3]), parseFloat(bounds[2])]])
+      map.fitBounds([[parseFloat(bounds[1]), parseFloat(bounds[0])], [parseFloat(bounds[3]), parseFloat(bounds[2])]]);
     }
   }
 
   // Button for users location
-  L.easyButton('<div title="Your location"><i class="fas fa-map-marker-alt"</i></div>', (btn, map) => {
+  L.easyButton('<img style="width: 15px;" src="/images/marker-icon.png" />', (btn, map) => {
     if (userLocation.length !== 0) {
       map.flyTo([userLocation[0], userLocation[1]], 14);
     } else {
@@ -300,7 +302,7 @@ function panToMarkers() {
 
 // Get the lat, lon for a given marker
 function getCoords(marker) {
-  return L.latLng(marker['_latlng']['lat'], marker['_latlng']['lng'])
+  return L.latLng(marker['_latlng']['lat'], marker['_latlng']['lng']);
 }
 
 export function displayRoute(additionalNodes) {
@@ -347,18 +349,10 @@ window.onbeforeunload = () => {
 };
 
 export function getBoundsLngLat() {
-  return map.getBounds().toBBoxString();
-}
-
-function changeMapToLight() {
-  // Center of Ireland Coords - 53.4239° N, 7.9407° W
-  map.setView(L.latLng(53.4239, -7.9407), 7.5, {
-    "animate": true,
-    "pan": {
-      "duration": 1
-    }
-  });
-  light.addTo(map);
+  let bounds = map.getBounds();
+  bounds._northEast = bounds.getNorthEast().wrap();
+  bounds._southWest = bounds.getSouthWest().wrap();
+  return bounds.toBBoxString();
 }
 
 let routeLayerGroup;
@@ -393,8 +387,8 @@ export function addGeoJSON(routeGeoJSON, cost = 0, totalCost = 0, distance = 0, 
 export function removeGeoJSON() {
   routeLayerGroup.clearLayers();
 
-  routeHistory = [];
-  routeHistoryIndex = 0;
+  /*  routeHistory = [];
+    routeHistoryIndex = 0;*/
 }
 
 export function addDottedLine(LatLngArray) {
@@ -402,15 +396,15 @@ export function addDottedLine(LatLngArray) {
   routeLayerGroup.addLayer(polyline);
 }
 
-let routeHistory = [];
-let routeHistoryIndex = 0;
+/*let routeHistory = [];
+let routeHistoryIndex = 0;*/
 
-export function setRouteHistory(history) {
+/*export function setRouteHistory(history) {
   routeHistory = history;
   routeHistoryIndex = 0;
-}
+}*/
 
-function routeHistoryNext(count = 1) {
+/*function routeHistoryNext(count = 1) {
   for (let i = 0; i < count; i++) {
     if (routeHistoryIndex >= routeHistory.length) {
       console.log("FOUND TARGET!!!");
@@ -423,21 +417,11 @@ function routeHistoryNext(count = 1) {
         node.distance_minutes, null, 3);
     routeHistoryIndex++;
   }
-}
+}*/
 
 export function removeAllMarkers() {
   for (let markerId of markerMap.keys())
     map.removeLayer(markerMap.get(markerId));
 
   markerMap.clear();
-}
-
-export function allRoads() {
-  removeAllMarkers();
-  removeRoute();
-  removeGeoJSON();
-  changeMapToLight();
-
-  for (let road of all_roads)
-    addGeoJSON(road.route, 0, 0, 0, 0, '#2d456b', 1, false);
 }

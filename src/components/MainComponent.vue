@@ -1,44 +1,44 @@
 <script>
-  import SplashScreen from "./SplashScreen";
-  import LoadingScreen from "./LoadingScreen";
-  import Search from "./Search";
-  import ContextMenu from "./ContextMenu/ContextMenu";
-  import ContextMenuItem from "./ContextMenu/ContextMenuItem";
+import SplashScreen from "./SplashScreen";
+import LoadingScreen from "./LoadingScreen";
+import Search from "./Search";
+import ContextMenu from "./ContextMenu/ContextMenu";
+import ContextMenuItem from "./ContextMenu/ContextMenuItem";
 
-  import { createMap, getMapLatLng } from '../js/map';
-  import { mapState } from "vuex";
+import { createMap, getMapLatLng } from '../js/map';
+import { mapState } from "vuex";
 
-  export default {
-    name: 'MainComponent',
-    components: {
-      LoadingScreen,
-      SplashScreen,
-      Search,
-      ContextMenu,
-      ContextMenuItem
-    },
-    data: function () {
-      return {
-        isSplashLoading: true,
-        contextMenuItems: [
-          { title: "Directions From Here", value: 1 },
-          { title: "Directions To Here", value: 2 },
-          { title: "Directions Via Here", value: 3 },
-        ],
-        ContextMenuActions: Object.freeze(
-          {
-            FROM: 1,
-            TO: 2,
-            VIA: 3
-          }),
-        searchResult: ""
-      }
-    },
-    methods: {
-      contextMenuAction(action) {
-        this.$refs.menu.close();
-        console.log(action);
-        console.log(getMapLatLng());
+export default {
+  name: 'MainComponent',
+  components: {
+    LoadingScreen,
+    SplashScreen,
+    Search,
+    ContextMenu,
+    ContextMenuItem
+  },
+  data: function () {
+    return {
+      isSplashLoading: true,
+      contextMenuItems: [
+        { title: "Directions From Here", value: 1 },
+        { title: "Directions To Here", value: 2 },
+        { title: "Directions Via Here", value: 3 },
+      ],
+      ContextMenuActions: Object.freeze(
+        {
+          FROM: 1,
+          TO: 2,
+          VIA: 3
+        }),
+      searchResult: ""
+    };
+  },
+  methods: {
+    contextMenuAction(action) {
+      this.$refs.menu.close();
+      console.log(action);
+      console.log(getMapLatLng());
 
         let data = {
           lat: getMapLatLng().lat,
@@ -81,7 +81,7 @@
         this.searchResult = data.geonames;
       }
     },
-  }
+  };
 </script>
 
 <template>
@@ -89,13 +89,12 @@
     <SplashScreen :active="isSplashLoading"></SplashScreen>
     <div v-bind:class="{ 'is-invisible': isSplashLoading }">
 
-      <LoadingScreen v-bind:type="routeType" v-if="routeType"></LoadingScreen>
+      <LoadingScreen v-if="routeType" v-bind:type="routeType"></LoadingScreen>
 
       <div id="mapid" @contextmenu.prevent="$refs.menu.open($event, 'Payload')">
         <ContextMenu ref="menu">
-          <template slot-scope="{ contextData }">
-            <ContextMenuItem :key="'CMI' + cmi.value" @click.native="contextMenuAction(cmi.value)"
-                             v-for="cmi in contextMenuItems">
+          <template>
+            <ContextMenuItem v-for="cmi in contextMenuItems" :key="'CMI' + cmi.value" @click.native="contextMenuAction(cmi.value)">
               {{ cmi.title }}
             </ContextMenuItem>
           </template>
@@ -107,16 +106,16 @@
 </template>
 
 <style>
-  * {
-    font-family: 'Lato', sans-serif;
-  }
+* {
+  font-family: 'Lato', sans-serif;
+}
 
-  #mapid {
-    height: 100vh;
-  }
+#mapid {
+  height: 100vh;
+}
 
-  /*Removes the scroll bar*/
-  html, body {
-    overflow: hidden;
-  }
+/*Removes the scroll bar*/
+html, body {
+  overflow: hidden;
+}
 </style>

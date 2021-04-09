@@ -1,21 +1,21 @@
-// Create a Vue Component for the node searching and dropdown lost of search results
+// Create a Vue Component for the node searching and dropdown list of search results
 // This can be reused for all node searches
 // Templating for searching
 <script>
 
-  import { addMarker, getBoundsLngLat, removeGeoJSON, removeMarker } from "../js/map";
+import { addMarker, getBoundsLngLat, removeGeoJSON, removeMarker } from "../js/map";
 
-  export default {
-    name: 'node-search',
-    data: function () {
-      return {
-        searchQuery: '',
-        isSearching: false,
-        searchTimeout: {},
-        searchResults: []
-      }
-    },
-    props: { id: Number, index: Number, nodeData: Object },
+export default {
+  name: 'node-search',
+  data: function () {
+    return {
+      searchQuery: '',
+      isSearching: false,
+      searchTimeout: {},
+      searchResults: []
+    };
+  },
+  props: { id: Number, index: Number, nodeData: Object },
   methods: {
     searchChange: function () {
       if (this.searchTimeout)
@@ -51,9 +51,13 @@
     },
     deleteSearch: function () {
       if (this.id > 0)
-        this.$store.commit('REMOVE_NODE', this.index-1);
-      else
+        this.$store.commit('REMOVE_NODE', this.index - 1);
+      else {
         this.searchQuery = '';
+        this.searchResults = [];
+        clearTimeout(this.searchTimeout);
+        this.isSearching = false;
+      }
 
       removeMarker(this.index);
     },
@@ -81,7 +85,7 @@
         case -1:
           return 'E';
         default:
-          return this.index
+          return this.index;
       }
     },
     placeholder() {
@@ -100,7 +104,7 @@
       this.searchQuery = newValue.display_place || '';
     }
   }
-}
+};
 </script>
 
 <template>
@@ -109,18 +113,18 @@
       <strong class="start-end-strong">{{ label }}</strong>
     </div>
     <div class="sv-input sv-item control has-icons-right">
-      <input v-on:keyup.enter="searchChangeEnter" v-model.trim="searchQuery" @keyup="searchChange"
-             @focus="isSearching = true"
-             @blur="closeSearchList" class="input is-rounded" autocomplete="off"
-             type="text" :placeholder="placeholder">
+      <input v-model.trim="searchQuery" :placeholder="placeholder" autocomplete="off"
+             class="input is-rounded"
+             type="text" @blur="closeSearchList" @focus="isSearching = true"
+             @keyup="searchChange" v-on:keyup.enter="searchChangeEnter">
       <span class="icon is-small is-right">
-                          <a @click="deleteSearch" class="delete is-small"></a>
+                          <a class="delete is-small" @click="deleteSearch"></a>
                         </span>
     </div>
     <div class="sv-suggestions-box-wrapper">
       <div v-if="isSearching" class="card sv-suggestions-box">
         <ul class="menu-list">
-          <li v-for="result in searchResults" @click="searchSelected(result)" class="search-menu-item">
+          <li v-for="result in searchResults" class="search-menu-item" @click="searchSelected(result)" :key="result.osm_id">
             <span class="">{{ result.display_place }}</span>
             <br>
             <span class="search-menu-item-addr">{{ result.display_address }}</span>

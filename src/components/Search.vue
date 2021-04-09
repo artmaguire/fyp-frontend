@@ -1,35 +1,46 @@
 <script>
-  import axios from "axios";
-  import Swal from "sweetalert2";
+import axios from "axios";
+import Swal from "sweetalert2";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+  faBicycle,
+  faCar,
+  faChevronDown,
+  faChevronLeft,
+  faChevronUp,
+  faClock,
+  faDirections,
+  faFileExport,
+  faPlus,
+  faRetweet,
+  faRoute,
+  faSearch,
+  faTimes,
+  faTruck,
+  faWalking
+} from "@fortawesome/free-solid-svg-icons";
 
-  import "@fortawesome/fontawesome-free/js/all";
+import NodeSearch from "./NodeSearch";
 
-  import NodeSearch from "./NodeSearch";
+import { Algorithms, Flags } from "../js/constants";
+import { addDottedLine, addGeoJSON, removeAllMarkers, removeGeoJSON, removeRoute, reverseMarkers } from "../js/map";
+import { mapState } from "vuex";
 
-  import { Algorithms, Flags } from "../js/constants"
-  import {
-    addDottedLine,
-    addGeoJSON,
-    removeAllMarkers,
-    removeGeoJSON,
-    removeRoute,
-    reverseMarkers,
-    setRouteHistory
-  } from "../js/map";
-  import { mapState } from "vuex";
+library.add(faCar, faBicycle, faWalking, faTruck, faPlus, faRetweet, faTimes, faSearch, faRoute, faClock, faFileExport, faDirections,
+  faChevronUp, faChevronDown, faChevronLeft);
 
-  export default {
-    name: 'search',
-    components: {
-      NodeSearch
-    },
-    data: function () {
-      return {
-        searchTypes: [
-          { type: 'driving', icon: 'fa-car', flag: Flags.CAR },
-          { type: 'cycling', icon: 'fa-bicycle', flag: Flags.BIKE },
-          { type: 'walking', icon: 'fa-walking', flag: Flags.FOOT },
-        { type: 'courier', icon: 'fa-truck', flag: Flags.CAR }],
+export default {
+  name: 'search',
+  components: {
+    NodeSearch
+  },
+  data: function () {
+    return {
+      searchTypes: [
+        { type: 'driving', icon: 'car', flag: Flags.CAR },
+        { type: 'cycling', icon: 'bicycle', flag: Flags.BIKE },
+        { type: 'walking', icon: 'walking', flag: Flags.FOOT },
+        { type: 'courier', icon: 'truck', flag: Flags.CAR }],
       activeType: {},
       Algorithms: Algorithms,
       algorithmType: Algorithms.BI_ASTAR,
@@ -41,14 +52,13 @@
       routeDetails: false,
       expand: false,
       hideSearchView: false
-    }
+    };
   },
   methods: {
     setActiveType(type) {
       this.activeType = type;
     },
     addNode() {
-      // this.additionalNodes.push({id: Math.random(), component: NodeSearch});
       this.$store.commit('PUSH_NODE', { id: Math.random(), data: {} });
     },
     goButtonClick: function () {
@@ -75,7 +85,7 @@
       };
 
       let nodes = this.additionalNodes.map(({ data: { lat, lon } }) => {
-        return { lat: lat, lon: lon }
+        return { lat: lat, lon: lon };
       });
       if (nodes.length)
         params.additionalNodes = nodes;
@@ -112,7 +122,8 @@
           downloadRoute.push(route.route);
 
           if (route.history)
-            setRouteHistory(route.history);
+            console.log(route.history);
+          // setRouteHistory(route.history);
           else
             addGeoJSON(route.route, 0, 0, 0, 0, "crimson", 3);
         }
@@ -123,7 +134,6 @@
       }).finally(() => {
         this.$store.commit('SET_ROUTE_LOADING', null);
       });
-      // displayRoute(this.additionalNodes.map(x => x.id));
     },
     deleteNode(id) {
       this.additionalNodes = this.additionalNodes.filter(node => node.id !== id);
@@ -179,11 +189,11 @@
     this.activeType = this.searchTypes[0];
   },
   computed: mapState(['startNode', 'endNode', 'additionalNodes'])
-}
+};
 </script>
 
 <template>
-  <div v-bind:class="{ 'show-search-view': hideSearchView }" class="search-view">
+  <div class="search-view" v-bind:class="{ 'show-search-view': hideSearchView }">
     <div class="box search-view-content">
       <div class="search-view-header">
         <p>Direction Finding Using OSM</p>
@@ -192,10 +202,9 @@
         <div class="card">
           <div id="transport-icons">
             <ul>
-              <li v-for="searchType in searchTypes" @click="setActiveType(searchType)" v-bind:title="searchType.type"
-                  class="sv-icon"
-                  v-bind:class="{ 'sv-icon-active': activeType.type === searchType.type }">
-                <i class="fas" :class="searchType.icon"></i>
+              <li v-for="searchType in searchTypes" class="sv-icon" v-bind:class="{ 'sv-icon-active': activeType.type === searchType.type }"
+                  v-bind:title="searchType.type" @click="setActiveType(searchType)" :key="searchType.type">
+                <font-awesome-icon :icon="searchType.icon" />
               </li>
               <!-- TODO: Add more gifs for bus and truck? -->
             </ul>
@@ -204,96 +213,96 @@
         <div class="sv-inputs">
           <!-- Templating for search nodes, done by Vue Component -->
           <NodeSearch :id="0" :index="0" :node-data="startNode"></NodeSearch>
-          <NodeSearch v-for="(child, index) in additionalNodes" :id="child.id" :index="index+1" :node-data="child.data"
-                      :key="child.id">
+          <NodeSearch v-for="(child, index) in additionalNodes" :id="child.id" :key="child.id" :index="index+1"
+                      :node-data="child.data">
             <hr class="search-inputs-hr">
           </NodeSearch>
           <hr class="search-inputs-hr">
 
-          <!-- Templating for search nodes, done by Vue Component -->
           <NodeSearch :id="-1" :index="-1" :node-data="endNode"></NodeSearch>
         </div>
         <div class="sv-item">
-          <button @click="addNode" class="button add-node" title="Add location"
-                  :disabled="additionalNodes.length >= 5">
-            <i class="fa fa-plus"></i>
+          <button :disabled="additionalNodes.length >= 5" class="button add-node" title="Add location"
+                  @click="addNode">
+            <font-awesome-icon icon="plus"/>
           </button>
           <button class="button reverse-waypoints" title="Reverse waypoints" @click="reverseWayPoints">
-            <i class="fa fa-retweet"></i>
+            <font-awesome-icon icon="retweet"/>
           </button>
-          <button @click="clearRoute" class="button reverse-waypoints" title="Clear route">
-            <i class="fa fa-times"></i>
+          <button class="button reverse-waypoints" title="Clear route" @click="clearRoute">
+            <font-awesome-icon icon="times"/>
           </button>
           <div id="search-btn">
-            <button id="go-button" title="Find route" class="button is-rounded" @click="goButtonClick">
+            <button id="go-button" class="button is-rounded" title="Find route" @click="goButtonClick">
               <div class="icon is-small">
-                <i class="fa fa-search"></i>
+                <font-awesome-icon icon="search"/>
               </div>
             </button>
           </div>
         </div>
 
-        <div class="route-details" v-if="routeDetails">
-          <i class="route-stats route-stats-icon fas fa-route"></i>
+        <div v-if="routeDetails" class="route-details">
+          <font-awesome-icon icon="route"/>
           <strong class="route-stats">{{ distance }} km</strong>
-          <strong class="route-stats"><-></strong>
+          <strong class="route-stats">&lt;-&gt;</strong> <!-- <-> -->
           <strong class="route-stats">{{ time }}</strong>
-          <i class="route-stats route-stats-icon fas fa-clock"></i>
-          <a title="Export Route" class="route-details-download" @click="downloadRoute"><i
-              class="route-download-icon fas fa-file-export"></i></a>
+          <font-awesome-icon icon="clock"/>
+          <a class="route-details-download route-download-icon" title="Export Route" @click="downloadRoute">
+            <font-awesome-icon icon="file-export"/>
+          </a>
         </div>
 
         <div class="addition-settings" v-bind:class="{ expand: expand }">
           <hr style="margin: 1px">
           <div class="algorithm-radio-buttons">
             <strong class="start-end-strong">Select an algorithm</strong>
-            <div style="padding-left: 24px;" class="control">
+            <div class="control" style="padding-left: 24px;">
               <label class="radio">
-                <input type="radio" :value="Algorithms.DIJKSTRA" v-model="algorithmType">
+                <input v-model="algorithmType" :value="Algorithms.DIJKSTRA" type="radio">
                 Dijkstra
               </label>
               <br>
               <label class="radio">
-                <input type="radio" :value="Algorithms.BI_DIJKSTRA" v-model="algorithmType">
+                <input v-model="algorithmType" :value="Algorithms.BI_DIJKSTRA" type="radio">
                 Bi-directional Dijkstra
               </label>
               <br>
               <label class="radio">
-                <input type="radio" :value="Algorithms.ASTAR" v-model="algorithmType">
+                <input v-model="algorithmType" :value="Algorithms.ASTAR" type="radio">
                 A*
               </label>
               <br>
               <label class="radio">
-                <input type="radio" :value="Algorithms.BI_ASTAR" v-model="algorithmType" checked>
+                <input v-model="algorithmType" :value="Algorithms.BI_ASTAR" checked type="radio">
                 Bi-directional A*
               </label>
             </div>
           </div>
           <div id="visualisation-checkbox" class="algorithm-radio-buttons">
             <label class="checkbox">
-              <input type="checkbox" v-model="visualisation">
+              <input v-model="visualisation" type="checkbox">
               <strong class="start-end-strong">Visualisation</strong>
             </label>
           </div>
         </div>
         <div class="algorithm-radio-dropdown">
-          <button class="button is-rounded is-small expand-search-view-button phone-expand" @click="expandSearchView"
-                  title="Additional Settings">
-                        <span v-show="expand">
-                            <i style="color:crimson" class="fas fa-chevron-up fa-lg"></i>
-                        </span>
-            <span v-show="!expand">
-                            <i style="color:crimson" class="fas fa-chevron-down fa-lg"></i>
-                        </span>
+          <button class="button is-rounded is-small expand-search-view-button phone-expand" title="Additional Settings"
+            @click="expandSearchView">
+              <span v-show="expand" style="color:crimson">
+                  <font-awesome-icon icon="chevron-up" size="lg"/>
+              </span>
+            <span v-show="!expand" style="color:crimson">
+              <font-awesome-icon icon="chevron-down" size="lg"/>
+            </span>
           </button>
         </div>
       </div>
     </div>
     <div v-show="hideSearchView" class="search-view-collapse-button" @click="collapseSearchView">
-      <i class="collapse fas fa-chevron-left"></i>
+      <font-awesome-icon icon="chevron-left"/>
     </div>
-    <div v-show="!hideSearchView" class="box minimised-search-view" @click="collapseSearchView">
-      <i class="minimised-search-view-icon fas fa-directions"></i>
+    <div v-show="!hideSearchView" class="box minimised-search-view minimised-search-view-icon" @click="collapseSearchView">
+      <font-awesome-icon icon="directions"/>
     </div>
   </div>
 </template>
@@ -314,11 +323,16 @@
 }
 
 .search-view-collapse-button {
+  color: crimson;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   float: right;
   width: 40px;
   height: 90px;
-  margin-right: -39px;
-  margin-top: -43%;
+  margin-right: -40px;
+  margin-top: -60%;
   background-color: white;
   box-shadow: 0 0 5px 0 rgb(233, 233, 233);
   visibility: hidden;

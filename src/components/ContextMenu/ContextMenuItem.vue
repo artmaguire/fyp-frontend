@@ -5,12 +5,10 @@
 </template>
 
 <script>
-export default {
-
-}
+export default {};
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .context-menu-item {
   display: block;
   position: relative;
@@ -22,15 +20,14 @@ export default {
   width: 100%;
   text-align: left;
   cursor: pointer;
-  padding:8px;
+  padding: 8px;
 
 
   &:hover,
   &:focus {
     background: #fff;
-    color:#000;
+    color: #000;
     outline: none;
   }
 }
 </style>
-

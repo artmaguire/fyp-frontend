@@ -1,0 +1,25 @@
+env:
+  browser: true
+  es2021: true
+extends:
+  - 'eslint:recommended'
+  - 'plugin:vue/essential'
+parserOptions:
+  ecmaVersion: 12
+  sourceType: module
+plugins:
+  - vue
+rules: {
+  semi: warn,
+  no-unreachable: error,
+  no-alert: error,
+  no-console: warn
+}
+ignorePatterns:
+  - "webpack*"
+  - "public/"
+  - "dummy*"
+  - "babel*"
+  - "*.png"
+  - "*.gif"
+  - "*.ico"

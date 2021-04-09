@@ -4,7 +4,7 @@ export default {
   data: function () {
     return {
       loadingTitle: 'Finding Route...'
-    }
+    };
   },
   methods: {
     cancelRoute() {
@@ -12,8 +12,8 @@ export default {
       window.location.reload(true);
     }
   },
-  props: {type: String}
-}
+  props: { type: String }
+};
 </script>
 
 <template>
@@ -28,7 +28,7 @@ export default {
           {{ loadingTitle }}
         </h2>
 
-        <div v-bind:class="[ type === 'walking' ? 'walking-gif' : 'gifs' ]" class="">
+        <div v-bind:class="[ type === 'walking' ? 'walking-gif' : 'gifs' ]">
           <img id="driving-gif"
                v-bind:src="'/images/gifs/' + type + '.gif'">
         </div>

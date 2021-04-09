@@ -1,10 +1,10 @@
 <template>
   <div
-      class="context-menu"
-      ref="popper"
       v-show="isVisible"
-      tabindex="-1"
-      v-click-outside="close">
+      ref="popper"
+      v-click-outside="close"
+      class="context-menu"
+      tabindex="-1">
     <ul>
       <slot :contextData="contextData"/>
     </ul>
@@ -13,7 +13,7 @@
 
 <script>
 import { createPopper } from '@popperjs/core';
-import ClickOutside from 'vue-click-outside'
+import ClickOutside from 'vue-click-outside';
 
 export default {
   props: {
@@ -84,7 +84,7 @@ export default {
 
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 
 .context-menu {
   position: fixed;
