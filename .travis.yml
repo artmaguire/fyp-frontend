@@ -5,7 +5,7 @@ install:
   - npm install --only=prod
 script:
   - npm run lint
-  - webpack --config webpack.stat.js
+  - npx webpack --config webpack.stat.js
 before_deploy:
   - tar -czf public.tar.gz public
 deploy:
