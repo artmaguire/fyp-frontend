@@ -134,8 +134,10 @@ let userLocation = [];
 
 export function createMap() {
   map = L.map('mapid', {
+    worldCopyJump: true,
     zoomDelta: 0.5,
-    zoomSnap: 0
+    zoomSnap: 0,
+    minZoom: 3
   }).setView([irelandView.x, irelandView.y], irelandView.zoom);
 
 
@@ -337,7 +339,10 @@ window.onbeforeunload = () => {
 };
 
 export function getBoundsLngLat() {
-  return map.getBounds().toBBoxString();
+  let bounds = map.getBounds();
+  bounds._northEast = bounds._northEast.wrap();
+  bounds._southWest = bounds._southWest.wrap();
+  return bounds.toBBoxString();
 }
 
 let routeLayerGroup;

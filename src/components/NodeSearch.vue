@@ -1,4 +1,4 @@
-// Create a Vue Component for the node searching and dropdown lost of search results
+// Create a Vue Component for the node searching and dropdown list of search results
 // This can be reused for all node searches
 // Templating for searching
 <script>
