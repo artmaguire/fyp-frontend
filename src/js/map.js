@@ -232,8 +232,8 @@ export function getMapLatLng() {
 export const markerMap = new Map();
 
 export function addMarker(name, lat, lon, key, id) {
-  if (markerMap.has(key)) {
-    map.removeLayer(markerMap.get(key));
+  if (markerMap.has(id)) {
+    map.removeLayer(markerMap.get(id));
   }
 
   let icon = markerIcons[id];
@@ -242,7 +242,7 @@ export function addMarker(name, lat, lon, key, id) {
   marker.bindPopup("<b>" + name).openPopup();
   marker.name = name;
 
-  markerMap.set(key, marker);
+  markerMap.set(id, marker);
   if (markerMap.size > 1)
     panToMarkers();
   else
@@ -252,8 +252,18 @@ export function addMarker(name, lat, lon, key, id) {
 export function removeMarker(markerId) {
   let marker = markerMap.get(markerId);
   markerMap.delete(markerId);
-
   map.removeLayer(marker);
+
+  // Re-configures order of markers
+  if (!(markerId === -1 || markerId === 0)) {
+    for (let i = markerId; i < markerMap.size; i++) {
+      if (markerMap.has(i + 1)) {
+        addMarker(markerMap.get(i + 1).name, markerMap.get(i + 1)._latlng.lat, markerMap.get(i + 1)._latlng.lng, markerId, markerId);
+        map.removeLayer(markerMap.get(i + 1));
+        markerMap.delete(i + 1);
+      }
+    }
+  }
 }
 
 export function reverseMarkers() {

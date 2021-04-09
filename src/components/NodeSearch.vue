@@ -3,19 +3,19 @@
 // Templating for searching
 <script>
 
-import { addMarker, getBoundsLngLat, removeGeoJSON, removeMarker } from "../js/map";
+  import { addMarker, getBoundsLngLat, removeGeoJSON, removeMarker } from "../js/map";
 
-export default {
-  name: 'node-search',
-  data: function () {
-    return {
-      searchQuery: '',
-      isSearching: false,
-      searchTimeout: {},
-      searchResults: []
-    }
-  },
-  props: { id: Number, index: Number, nodeData: Object },
+  export default {
+    name: 'node-search',
+    data: function () {
+      return {
+        searchQuery: '',
+        isSearching: false,
+        searchTimeout: {},
+        searchResults: []
+      }
+    },
+    props: { id: Number, index: Number, nodeData: Object },
   methods: {
     searchChange: function () {
       if (this.searchTimeout)
@@ -32,7 +32,7 @@ export default {
       }, 250, data);
     },
     searchSelected: function (result) {
-      removeGeoJSON()
+      removeGeoJSON();
       addMarker(result.display_place, result.lat, result.lon, this.id, this.index);
 
       switch (this.index) {
@@ -55,11 +55,11 @@ export default {
       else
         this.searchQuery = '';
 
-      removeMarker(this.id);
+      removeMarker(this.index);
     },
     searchChangeEnter: function () {
       if (this.searchQuery === '' || !this.searchResults.length)
-        return
+        return;
 
       this.searchSelected(this.searchResults[0]);
       this.closeSearchList();
@@ -77,9 +77,9 @@ export default {
     label() {
       switch (this.index) {
         case 0:
-          return 'S'
+          return 'S';
         case -1:
-          return 'E'
+          return 'E';
         default:
           return this.index
       }
@@ -87,11 +87,11 @@ export default {
     placeholder() {
       switch (this.index) {
         case 0:
-          return 'Start'
+          return 'Start';
         case -1:
-          return 'End'
+          return 'End';
         default:
-          return 'Via'
+          return 'Via';
       }
     }
   },
