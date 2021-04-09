@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import { createPopper } from '@popperjs/core';
 import ClickOutside from 'vue-click-outside';
+import { createPopper } from '@popperjs/core';
 
 export default {
   props: {

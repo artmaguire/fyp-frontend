@@ -1,7 +1,7 @@
 <script>
-import axios from "axios";
-import Swal from "sweetalert2";
-import { library } from "@fortawesome/fontawesome-svg-core";
+import { addDottedLine, addGeoJSON, removeAllMarkers, removeGeoJSON, removeRoute, reverseMarkers } from "../js/map";
+import { Algorithms, Flags } from "../js/constants";
+
 import {
   faBicycle,
   faCar,
@@ -20,11 +20,12 @@ import {
   faWalking
 } from "@fortawesome/free-solid-svg-icons";
 
-import NodeSearch from "./NodeSearch";
-
-import { Algorithms, Flags } from "../js/constants";
-import { addDottedLine, addGeoJSON, removeAllMarkers, removeGeoJSON, removeRoute, reverseMarkers } from "../js/map";
+import axios from "axios";
+import { library } from "@fortawesome/fontawesome-svg-core";
 import { mapState } from "vuex";
+import NodeSearch from "./NodeSearch";
+import Swal from "sweetalert2";
+
 
 library.add(faCar, faBicycle, faWalking, faTruck, faPlus, faRetweet, faTimes, faSearch, faRoute, faClock, faFileExport, faDirections,
   faChevronUp, faChevronDown, faChevronLeft);

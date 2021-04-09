@@ -1,12 +1,13 @@
 <script>
-import SplashScreen from "./SplashScreen";
-import LoadingScreen from "./LoadingScreen";
-import Search from "./Search";
+import { createMap, getMapLatLng } from '../js/map';
+
 import ContextMenu from "./ContextMenu/ContextMenu";
 import ContextMenuItem from "./ContextMenu/ContextMenuItem";
-
-import { createMap, getMapLatLng } from '../js/map';
+import LoadingScreen from "./LoadingScreen";
 import { mapState } from "vuex";
+import Search from "./Search";
+import SplashScreen from "./SplashScreen";
+
 
 export default {
   name: 'MainComponent',

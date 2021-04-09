@@ -1,9 +1,10 @@
-import L from 'leaflet';
 import 'leaflet-easybutton';
+import 'leaflet/dist/leaflet.css';
+
+import L from 'leaflet';
+import { Nodes } from "./constants";
 import Swal from 'sweetalert2';
 
-import 'leaflet/dist/leaflet.css';
-import { Nodes } from "./constants";
 
 // Leaflet JS OpenStreetMapMapbox Map
 
