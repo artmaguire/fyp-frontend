@@ -170,7 +170,7 @@ export function createMap() {
   }
 
   // Button for users location
-  L.easyButton('<div title="Your location"><i class="fas fa-map-marker-alt"</i></div>', (btn, map) => {
+  L.easyButton('<img style="width: 15px;" src="/images/marker-icon.png" />', (btn, map) => {
     if (userLocation.length !== 0) {
       map.flyTo([userLocation[0], userLocation[1]], 14);
     } else {
@@ -372,8 +372,8 @@ export function addGeoJSON(routeGeoJSON, cost = 0, totalCost = 0, distance = 0, 
 export function removeGeoJSON() {
   routeLayerGroup.clearLayers();
 
-/*  routeHistory = [];
-  routeHistoryIndex = 0;*/
+  /*  routeHistory = [];
+    routeHistoryIndex = 0;*/
 }
 
 export function addDottedLine(LatLngArray) {

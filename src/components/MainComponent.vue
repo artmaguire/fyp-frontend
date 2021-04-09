@@ -33,9 +33,9 @@ export default {
       console.log(action);
       console.log(getMapLatLng());
 
-      switch (action) {
-          //TODO: Context menu options
-      }
+      // switch (action) {
+      //     //TODO: Context menu options
+      // }
     }
   },
   computed: mapState(['routeType']),
@@ -57,7 +57,7 @@ export default {
 
       <div id="mapid" @contextmenu.prevent="$refs.menu.open($event, 'Payload')">
         <ContextMenu ref="menu">
-          <template slot-scope="{ contextData }">
+          <template>
             <ContextMenuItem v-for="cmi in contextMenuItems" :key="'CMI' + cmi.value" @click.native="contextMenuAction(cmi.value)">
               {{ cmi.title }}
             </ContextMenuItem>

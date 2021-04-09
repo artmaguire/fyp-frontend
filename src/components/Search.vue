@@ -1,14 +1,33 @@
 <script>
 import axios from "axios";
 import Swal from "sweetalert2";
-
-import "@fortawesome/fontawesome-free/js/all";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+  faBicycle,
+  faCar,
+  faChevronDown,
+  faChevronLeft,
+  faChevronUp,
+  faClock,
+  faDirections,
+  faFileExport,
+  faPlus,
+  faRetweet,
+  faRoute,
+  faSearch,
+  faTimes,
+  faTruck,
+  faWalking
+} from "@fortawesome/free-solid-svg-icons";
 
 import NodeSearch from "./NodeSearch";
 
 import { Algorithms, Flags } from "../js/constants";
 import { addDottedLine, addGeoJSON, removeAllMarkers, removeGeoJSON, removeRoute, reverseMarkers } from "../js/map";
 import { mapState } from "vuex";
+
+library.add(faCar, faBicycle, faWalking, faTruck, faPlus, faRetweet, faTimes, faSearch, faRoute, faClock, faFileExport, faDirections,
+  faChevronUp, faChevronDown, faChevronLeft);
 
 export default {
   name: 'search',
@@ -18,10 +37,10 @@ export default {
   data: function () {
     return {
       searchTypes: [
-        { type: 'driving', icon: 'fa-car', flag: Flags.CAR },
-        { type: 'cycling', icon: 'fa-bicycle', flag: Flags.BIKE },
-        { type: 'walking', icon: 'fa-walking', flag: Flags.FOOT },
-        { type: 'courier', icon: 'fa-truck', flag: Flags.CAR }],
+        { type: 'driving', icon: 'car', flag: Flags.CAR },
+        { type: 'cycling', icon: 'bicycle', flag: Flags.BIKE },
+        { type: 'walking', icon: 'walking', flag: Flags.FOOT },
+        { type: 'courier', icon: 'truck', flag: Flags.CAR }],
       activeType: {},
       Algorithms: Algorithms,
       algorithmType: Algorithms.BI_ASTAR,
@@ -40,7 +59,6 @@ export default {
       this.activeType = type;
     },
     addNode() {
-      // this.additionalNodes.push({id: Math.random(), component: NodeSearch});
       this.$store.commit('PUSH_NODE', { id: Math.random(), data: {} });
     },
     goButtonClick: function () {
@@ -105,7 +123,7 @@ export default {
 
           if (route.history)
             console.log(route.history);
-            // setRouteHistory(route.history);
+          // setRouteHistory(route.history);
           else
             addGeoJSON(route.route, 0, 0, 0, 0, "crimson", 3);
         }
@@ -116,7 +134,6 @@ export default {
       }).finally(() => {
         this.$store.commit('SET_ROUTE_LOADING', null);
       });
-      // displayRoute(this.additionalNodes.map(x => x.id));
     },
     deleteNode(id) {
       this.additionalNodes = this.additionalNodes.filter(node => node.id !== id);
@@ -186,9 +203,8 @@ export default {
           <div id="transport-icons">
             <ul>
               <li v-for="searchType in searchTypes" class="sv-icon" v-bind:class="{ 'sv-icon-active': activeType.type === searchType.type }"
-                  v-bind:title="searchType.type"
-                  @click="setActiveType(searchType)">
-                <i :class="searchType.icon" class="fas"></i>
+                  v-bind:title="searchType.type" @click="setActiveType(searchType)" :key="searchType.type">
+                <font-awesome-icon :icon="searchType.icon" />
               </li>
               <!-- TODO: Add more gifs for bus and truck? -->
             </ul>
@@ -203,37 +219,37 @@ export default {
           </NodeSearch>
           <hr class="search-inputs-hr">
 
-          <!-- Templating for search nodes, done by Vue Component -->
           <NodeSearch :id="-1" :index="-1" :node-data="endNode"></NodeSearch>
         </div>
         <div class="sv-item">
           <button :disabled="additionalNodes.length >= 5" class="button add-node" title="Add location"
                   @click="addNode">
-            <i class="fa fa-plus"></i>
+            <font-awesome-icon icon="plus"/>
           </button>
           <button class="button reverse-waypoints" title="Reverse waypoints" @click="reverseWayPoints">
-            <i class="fa fa-retweet"></i>
+            <font-awesome-icon icon="retweet"/>
           </button>
           <button class="button reverse-waypoints" title="Clear route" @click="clearRoute">
-            <i class="fa fa-times"></i>
+            <font-awesome-icon icon="times"/>
           </button>
           <div id="search-btn">
             <button id="go-button" class="button is-rounded" title="Find route" @click="goButtonClick">
               <div class="icon is-small">
-                <i class="fa fa-search"></i>
+                <font-awesome-icon icon="search"/>
               </div>
             </button>
           </div>
         </div>
 
         <div v-if="routeDetails" class="route-details">
-          <i class="route-stats route-stats-icon fas fa-route"></i>
+          <font-awesome-icon icon="route"/>
           <strong class="route-stats">{{ distance }} km</strong>
-          <strong class="route-stats"><-></strong>
+          <strong class="route-stats">&lt;-&gt;</strong> <!-- <-> -->
           <strong class="route-stats">{{ time }}</strong>
-          <i class="route-stats route-stats-icon fas fa-clock"></i>
-          <a class="route-details-download" title="Export Route" @click="downloadRoute"><i
-              class="route-download-icon fas fa-file-export"></i></a>
+          <font-awesome-icon icon="clock"/>
+          <a class="route-details-download route-download-icon" title="Export Route" @click="downloadRoute">
+            <font-awesome-icon icon="file-export"/>
+          </a>
         </div>
 
         <div class="addition-settings" v-bind:class="{ expand: expand }">
@@ -271,22 +287,22 @@ export default {
         </div>
         <div class="algorithm-radio-dropdown">
           <button class="button is-rounded is-small expand-search-view-button phone-expand" title="Additional Settings"
-                  @click="expandSearchView">
-                        <span v-show="expand">
-                            <i class="fas fa-chevron-up fa-lg" style="color:crimson"></i>
-                        </span>
-            <span v-show="!expand">
-                            <i class="fas fa-chevron-down fa-lg" style="color:crimson"></i>
-                        </span>
+            @click="expandSearchView">
+              <span v-show="expand" style="color:crimson">
+                  <font-awesome-icon icon="chevron-up" size="lg"/>
+              </span>
+            <span v-show="!expand" style="color:crimson">
+              <font-awesome-icon icon="chevron-down" size="lg"/>
+            </span>
           </button>
         </div>
       </div>
     </div>
     <div v-show="hideSearchView" class="search-view-collapse-button" @click="collapseSearchView">
-      <i class="collapse fas fa-chevron-left"></i>
+      <font-awesome-icon icon="chevron-left"/>
     </div>
-    <div v-show="!hideSearchView" class="box minimised-search-view" @click="collapseSearchView">
-      <i class="minimised-search-view-icon fas fa-directions"></i>
+    <div v-show="!hideSearchView" class="box minimised-search-view minimised-search-view-icon" @click="collapseSearchView">
+      <font-awesome-icon icon="directions"/>
     </div>
   </div>
 </template>
@@ -307,11 +323,16 @@ export default {
 }
 
 .search-view-collapse-button {
+  color: crimson;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   float: right;
   width: 40px;
   height: 90px;
-  margin-right: -39px;
-  margin-top: -43%;
+  margin-right: -40px;
+  margin-top: -60%;
   background-color: white;
   box-shadow: 0 0 5px 0 rgb(233, 233, 233);
   visibility: hidden;

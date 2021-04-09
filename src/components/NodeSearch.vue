@@ -120,7 +120,7 @@ export default {
     <div class="sv-suggestions-box-wrapper">
       <div v-if="isSearching" class="card sv-suggestions-box">
         <ul class="menu-list">
-          <li v-for="result in searchResults" class="search-menu-item" @click="searchSelected(result)">
+          <li v-for="result in searchResults" class="search-menu-item" @click="searchSelected(result)" :key="result.osm_id">
             <span class="">{{ result.display_place }}</span>
             <br>
             <span class="search-menu-item-addr">{{ result.display_address }}</span>

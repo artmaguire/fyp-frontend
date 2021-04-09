@@ -11,7 +11,9 @@ plugins:
   - vue
 rules: {
   semi: warn,
-  no-unreachable: error
+  no-unreachable: error,
+  no-alert: error,
+  no-console: warn
 }
 ignorePatterns:
   - "webpack*"
