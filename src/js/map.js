@@ -350,8 +350,8 @@ window.onbeforeunload = () => {
 
 export function getBoundsLngLat() {
   let bounds = map.getBounds();
-  bounds._northEast = bounds._northEast.wrap();
-  bounds._southWest = bounds._southWest.wrap();
+  bounds._northEast = bounds.getNorthEast().wrap();
+  bounds._southWest = bounds.getSouthWest().wrap();
   return bounds.toBBoxString();
 }
 
