@@ -7,6 +7,11 @@ const ESLintPlugin = require('eslint-webpack-plugin');
 module.exports = {
   entry: './src/main.js',
   target: 'web',
+  ignoreWarnings: [/warning/],
+  performance: {
+    hints: false,
+    maxEntrypointSize: 600000, // int (in bytes)
+  },
   output: {
     path: __dirname + '/public',
     publicPath: '/',
