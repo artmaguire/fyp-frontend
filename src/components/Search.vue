@@ -367,12 +367,13 @@
   display: flex;
   justify-content: center;
   letter-spacing: 24px;
+  padding: 8px;
 }
 
 .sv-icon {
   padding: 0 16px;
   display: inline;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
 }
 
 .sv-icon-active {
