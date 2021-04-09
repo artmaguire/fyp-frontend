@@ -59,7 +59,7 @@ export default {
         this.isSearching = false;
       }
 
-      removeMarker(this.id);
+      removeMarker(this.index);
     },
     searchChangeEnter: function () {
       if (this.searchQuery === '' || !this.searchResults.length)
