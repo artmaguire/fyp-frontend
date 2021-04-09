@@ -373,7 +373,7 @@
 .sv-icon {
   padding: 0 16px;
   display: inline;
-  font-size: 1.6rem;
+  font-size: 1.5rem;
 }
 
 .sv-icon-active {
