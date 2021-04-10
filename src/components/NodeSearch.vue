@@ -117,7 +117,7 @@ export default {
 
 <template>
   <div class="sv-container">
-    <div class="sv-label sv-item">
+    <div class="sv-label sv-item is-align-self-center">
       <strong class="start-end-strong">{{ label }}</strong>
     </div>
     <div class="sv-input sv-item control has-icons-right">
@@ -126,8 +126,8 @@ export default {
              type="text" @blur="closeSearchList" @focus="isSearching = true"
              @keyup="searchChange" v-on:keyup.enter="searchChangeEnter">
       <span class="icon is-small is-right">
-                          <a class="delete is-small" @click="deleteSearch"></a>
-                        </span>
+        <a class="delete is-small" @click="deleteSearch"></a>
+      </span>
     </div>
     <div class="sv-suggestions-box-wrapper">
       <div v-if="isSearching" class="card sv-suggestions-box">
@@ -149,7 +149,6 @@ export default {
 }
 
 .sv-label {
-  margin-top: 7px !important;
   font-size: 1.05rem;
   font-weight: bold;
 }
@@ -169,6 +168,9 @@ export default {
 
 .sv-input > span {
   visibility: hidden;
+  margin: auto;
+  top: 0;
+  bottom: 0;
 }
 
 .sv-input:hover > span {
