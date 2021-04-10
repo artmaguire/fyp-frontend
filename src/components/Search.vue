@@ -339,23 +339,6 @@ export default {
   visibility: hidden;
 }
 
-.search-view-expand-button {
-  top: 10px;
-  left: 10px;
-  box-shadow: 0 0 5px 5px rgb(233, 233, 233);
-  visibility: hidden;
-  padding: 26px;
-  background: white;
-  position: absolute;
-}
-
-.collapse {
-  color: crimson;
-  font-size: 2rem;
-  margin-left: 18%;
-  margin-top: 77%;
-}
-
 .search-view-content {
   background: white;
   overflow: hidden;
@@ -456,33 +439,6 @@ export default {
   cursor: pointer;
 }
 
-.pageloader {
-  background: crimson !important;
-}
-
-.pageloader .title {
-  letter-spacing: 1px !important;
-  font-size: 22px !important;
-}
-
-#loading-background {
-  background-color: rgba(255, 255, 255, 0.4);
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  z-index: 5001;
-  backdrop-filter: blur(2px);
-}
-
-.location-button {
-  padding: 100px;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-}
-
 .addition-settings {
   display: none;
   padding-top: 12px;
@@ -518,11 +474,6 @@ export default {
 
 .route-stats {
   padding-right: 4px;
-}
-
-.route-stats-icon {
-  font-size: 1.4rem;
-  margin-bottom: -2px;
 }
 
 .route-download-icon {
@@ -617,10 +568,6 @@ export default {
     font-size: 2rem;
   }
 
-  .route-stats-icon {
-    font-size: 2.2rem;
-  }
-
   .route-details-download {
     font-size: 2rem;
   }
@@ -634,10 +581,6 @@ export default {
   }
 
   .search-view-collapse-button {
-    visibility: visible;
-  }
-
-  .search-view-expand-button {
     visibility: visible;
   }
 }

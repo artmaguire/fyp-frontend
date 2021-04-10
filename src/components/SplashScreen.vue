@@ -23,4 +23,15 @@ export default {
 <style lang="scss">
 @import "~bulma/bulma";
 @import "~bulma-pageloader/dist/css/bulma-pageloader";
+
+
+.pageloader {
+  background: crimson !important;
+}
+
+.pageloader .title {
+  letter-spacing: 1px !important;
+  font-size: 22px !important;
+}
+
 </style>

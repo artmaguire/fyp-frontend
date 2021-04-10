@@ -38,6 +38,18 @@ export default {
 </template>
 
 <style>
+
+#loading-background {
+  background-color: rgba(255, 255, 255, 0.4);
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 5001;
+  backdrop-filter: blur(2px);
+}
+
 .finding-route-card {
   width: 350px;
   padding: 20px;
