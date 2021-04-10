@@ -1,10 +1,10 @@
 <template>
   <div
-      v-show="isVisible"
-      ref="popper"
-      v-click-outside="close"
-      class="context-menu"
-      tabindex="-1">
+    v-show="isVisible"
+    ref="popper"
+    v-click-outside="close"
+    class="context-menu"
+    tabindex="-1">
     <ul>
       <slot :contextData="contextData"/>
     </ul>

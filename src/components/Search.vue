@@ -205,7 +205,7 @@ export default {
             <ul>
               <li v-for="searchType in searchTypes" class="sv-icon" v-bind:class="{ 'sv-icon-active': activeType.type === searchType.type }"
                   v-bind:title="searchType.type" @click="setActiveType(searchType)" :key="searchType.type">
-                <font-awesome-icon :icon="searchType.icon" />
+                <font-awesome-icon :icon="searchType.icon"/>
               </li>
               <!-- TODO: Add more gifs for bus and truck? -->
             </ul>
@@ -288,7 +288,7 @@ export default {
         </div>
         <div class="algorithm-radio-dropdown">
           <button class="button is-rounded is-small expand-search-view-button phone-expand" title="Additional Settings"
-            @click="expandSearchView">
+                  @click="expandSearchView">
               <span v-show="expand" style="color:crimson">
                   <font-awesome-icon icon="chevron-up" size="lg"/>
               </span>
