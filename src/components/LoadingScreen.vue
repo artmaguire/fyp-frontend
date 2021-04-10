@@ -1,4 +1,11 @@
 <script>
+
+import { faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+
+import { library } from "@fortawesome/fontawesome-svg-core";
+
+library.add(faTimesCircle);
+
 export default {
   name: 'loading-screen',
   data: function () {
@@ -22,7 +29,7 @@ export default {
       <div class="finding-route-card">
         <!-- The loader will be here -->
         <button class="button cancel-route" title="Cancel route" @click="cancelRoute">
-          <i class="fa fa-times-circle"></i>
+          <font-awesome-icon icon="times-circle"/>
         </button>
         <h2 class="finding-route-text">
           {{ loadingTitle }}
