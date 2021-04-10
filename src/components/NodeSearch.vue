@@ -47,7 +47,11 @@ export default {
       }, 120);
     },
     deleteSearch: function () {
-      if (this.id > 0)
+      removeGeoJSON();
+      if (this.searchQuery)
+        removeMarker(this.index);
+
+      if (this.index > 0)
         this.$store.commit('REMOVE_NODE', this.index - 1);
       else {
         this.searchQuery = '';
@@ -55,9 +59,6 @@ export default {
         clearTimeout(this.searchTimeout);
         this.isSearching = false;
       }
-
-      removeGeoJSON();
-      removeMarker(this.index);
     },
     searchChangeEnter: function () {
       if (this.searchQuery === '' || !this.searchResults.length)
