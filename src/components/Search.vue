@@ -483,21 +483,6 @@ export default {
   bottom: 0;
 }
 
-.search-menu-item {
-  cursor: pointer;
-  padding: 8px;
-  width: 100%;
-}
-
-.search-menu-item:hover {
-  background-color: #ececec;
-}
-
-.search-menu-item-addr {
-  color: #666666;
-  font-size: small;
-}
-
 .addition-settings {
   display: none;
   padding-top: 12px;
