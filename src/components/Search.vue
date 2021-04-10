@@ -451,13 +451,6 @@ export default {
   display: inline;
 }
 
-.cancel-route {
-  font-size: 1.4rem;
-  height: 100%;
-  float: right;
-  padding: 0;
-}
-
 .sv-icon:hover {
   color: crimson;
   cursor: pointer;
@@ -481,41 +474,6 @@ export default {
   left: 0;
   z-index: 5001;
   backdrop-filter: blur(2px);
-}
-
-.finding-route-card {
-  width: 350px;
-  padding: 20px;
-  background-color: rgba(255, 255, 255, 1);
-  position: absolute;
-  z-index: 5005;
-  border-radius: 6px;
-  top: 50%;
-  left: 50%;
-  margin: -67px 0 0 -172px; /* apply negative top and left margins to truly center the element */
-}
-
-.finding-route-text {
-  text-align: center;
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.gifs {
-  display: block;
-  margin-top: 25px;
-  margin-left: auto;
-  margin-right: auto;
-  width: 300px;
-}
-
-.walking-gif {
-  margin-top: 25px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 150px;
-  height: 250px;
 }
 
 .location-button {
