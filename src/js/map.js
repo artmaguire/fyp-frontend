@@ -255,6 +255,9 @@ export function addMarker(name, lat, lon, key, id) {
 
 export function removeMarker(markerId) {
   let marker = markerMap.get(markerId);
+  if (!marker)
+    return;
+
   markerMap.delete(markerId);
   map.removeLayer(marker);
 

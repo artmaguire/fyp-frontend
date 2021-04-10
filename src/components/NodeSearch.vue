@@ -44,12 +44,11 @@ export default {
     closeSearchList: function () {
       setTimeout(() => {
         this.isSearching = false;
-      }, 120);
+      }, 240);
     },
     deleteSearch: function () {
       removeGeoJSON();
-      if (this.searchQuery)
-        removeMarker(this.index);
+      removeMarker(this.index);
 
       if (this.index > 0)
         this.$store.commit('REMOVE_NODE', this.index - 1);
