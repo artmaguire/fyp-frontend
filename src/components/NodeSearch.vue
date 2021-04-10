@@ -191,6 +191,21 @@ export default {
   margin-top: 4px;
 }
 
+.search-menu-item {
+  cursor: pointer;
+  padding: 8px;
+  width: 100%;
+}
+
+.search-menu-item:hover {
+  background-color: #ececec;
+}
+
+.search-menu-item-addr {
+  color: #666666;
+  font-size: small;
+}
+
 /* MEDIA QUERIES FOR MOBILE USE */
 @media (max-width: 768px) {
   .sv-container {

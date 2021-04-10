@@ -207,7 +207,7 @@ export default {
             <ul>
               <li v-for="searchType in searchTypes" class="sv-icon" v-bind:class="{ 'sv-icon-active': activeType.type === searchType.type }"
                   v-bind:title="searchType.type" @click="setActiveType(searchType)" :key="searchType.type">
-                <font-awesome-icon :icon="searchType.icon" />
+                <font-awesome-icon :icon="searchType.icon"/>
               </li>
               <!-- TODO: Add more gifs for bus and truck? -->
             </ul>
@@ -290,7 +290,7 @@ export default {
         </div>
         <div class="algorithm-radio-dropdown">
           <button class="button is-rounded is-small expand-search-view-button phone-expand" title="Additional Settings"
-            @click="expandSearchView">
+                  @click="expandSearchView">
               <span v-show="expand" style="color:crimson">
                   <font-awesome-icon icon="chevron-up" size="lg"/>
               </span>
@@ -339,23 +339,6 @@ export default {
   background-color: white;
   box-shadow: 0 0 5px 0 rgb(233, 233, 233);
   visibility: hidden;
-}
-
-.search-view-expand-button {
-  top: 10px;
-  left: 10px;
-  box-shadow: 0 0 5px 5px rgb(233, 233, 233);
-  visibility: hidden;
-  padding: 26px;
-  background: white;
-  position: absolute;
-}
-
-.collapse {
-  color: crimson;
-  font-size: 2rem;
-  margin-left: 18%;
-  margin-top: 77%;
 }
 
 .search-view-content {
@@ -453,93 +436,9 @@ export default {
   display: inline;
 }
 
-.cancel-route {
-  font-size: 1.4rem;
-  height: 100%;
-  float: right;
-  padding: 0;
-}
-
 .sv-icon:hover {
   color: crimson;
   cursor: pointer;
-}
-
-.pageloader {
-  background: crimson !important;
-}
-
-.pageloader .title {
-  letter-spacing: 1px !important;
-  font-size: 22px !important;
-}
-
-#loading-background {
-  background-color: rgba(255, 255, 255, 0.4);
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  z-index: 5001;
-  backdrop-filter: blur(2px);
-}
-
-.finding-route-card {
-  width: 350px;
-  padding: 20px;
-  background-color: rgba(255, 255, 255, 1);
-  position: absolute;
-  z-index: 5005;
-  border-radius: 6px;
-  top: 50%;
-  left: 50%;
-  margin: -67px 0 0 -172px; /* apply negative top and left margins to truly center the element */
-}
-
-.finding-route-text {
-  text-align: center;
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.gifs {
-  display: block;
-  margin-top: 25px;
-  margin-left: auto;
-  margin-right: auto;
-  width: 300px;
-}
-
-.walking-gif {
-  margin-top: 25px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 150px;
-  height: 250px;
-}
-
-.location-button {
-  padding: 100px;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-}
-
-.search-menu-item {
-  cursor: pointer;
-  padding: 8px;
-  width: 100%;
-}
-
-.search-menu-item:hover {
-  background-color: #ececec;
-}
-
-.search-menu-item-addr {
-  color: #666666;
-  font-size: small;
 }
 
 .addition-settings {
@@ -577,11 +476,6 @@ export default {
 
 .route-stats {
   padding-right: 4px;
-}
-
-.route-stats-icon {
-  font-size: 1.4rem;
-  margin-bottom: -2px;
 }
 
 .route-download-icon {
@@ -676,10 +570,6 @@ export default {
     font-size: 2rem;
   }
 
-  .route-stats-icon {
-    font-size: 2.2rem;
-  }
-
   .route-details-download {
     font-size: 2rem;
   }
@@ -693,10 +583,6 @@ export default {
   }
 
   .search-view-collapse-button {
-    visibility: visible;
-  }
-
-  .search-view-expand-button {
     visibility: visible;
   }
 }
