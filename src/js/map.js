@@ -1,7 +1,8 @@
-import 'leaflet-easybutton';
 import 'leaflet/dist/leaflet.css';
 
 import L from 'leaflet';
+// eslint-disable-next-line sort-imports
+import 'leaflet-easybutton';
 import { Nodes } from "./constants";
 import Swal from 'sweetalert2';
 
