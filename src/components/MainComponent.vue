@@ -36,6 +36,9 @@ export default {
   },
   methods: {
     contextMenuAction(action) {
+      if (action === this.ContextMenuActions.VIA && this.additionalNodes.length >= 5)
+        return;
+
       this.$refs.menu.close();
 
       let data = {
@@ -47,7 +50,7 @@ export default {
       this.$socket.client.emit('reverse_geoname_search', data);
     }
   },
-  computed: mapState(['routeType']),
+  computed: mapState(['routeType', 'additionalNodes']),
   mounted() {
     setTimeout(() => {
       this.isSplashLoading = false;

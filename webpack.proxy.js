@@ -7,7 +7,10 @@ module.exports = merge(common, {
   devServer: {
     open: true,
     hot: true,
+    host: "0.0.0.0",
     port: 8081,
+    disableHostCheck: true,
+    useLocalIp: true,
     proxy: {
       '/route': 'http://localhost:5000',
       '/socket.io': {

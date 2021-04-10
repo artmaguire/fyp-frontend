@@ -9,7 +9,10 @@ module.exports = merge(common, {
   devServer: {
     open: true,
     hot: true,
+    host: "0.0.0.0",
     port: 8081,
+    disableHostCheck: true,
+    useLocalIp: true,
     before: (app) => {
       // Workaround to not being able to start a socketio session on webpack-dev-server
       const io = require('socket.io')(app.listen(8082));
