@@ -1,7 +1,7 @@
 const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
 
-const { dummy_route, dummy_search } = require("./dummy");
+const { dummy_route, dummy_search, dummy_reverse } = require("./dummy");
 
 module.exports = merge(common, {
   mode: 'development',
@@ -17,6 +17,10 @@ module.exports = merge(common, {
       io.on('connection', function (socket) {
         socket.on('geoname_search', data => {
           socket.emit('geoname_result', { node: data.node, geonames: dummy_search })
+        });
+
+        socket.on('reverse_geoname_search', data => {
+          socket.emit('reverse_geoname_result', { action: data.action, geoname: dummy_reverse[data.action - 1] })
         });
       });
 

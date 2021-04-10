@@ -151,4 +151,79 @@ const search = [
   }
 ];
 
-module.exports = { dummy_route: route, dummy_search: search };
+const reverse = [{
+  "place_id": "122090694",
+  "licence": "https://locationiq.com/attribution",
+  "osm_type": "way",
+  "osm_id": "151360656",
+  "lat": "52.6148540518692",
+  "lon": "-9.78349821077484",
+  "display_name": "Tullig, Tullig ED, West Clare Municipal District, County Clare, Munster, Ireland",
+  "address": {
+    "locality": "Tullig",
+    "city_district": "Tullig ED",
+    "region": "West Clare Municipal District",
+    "county": "County Clare",
+    "state_district": "Munster",
+    "country": "Ireland",
+    "country_code": "ie"
+  },
+  "boundingbox": [
+    "52.6145878",
+    "52.6169353",
+    "-9.7920476",
+    "-9.7690467"
+  ],
+  "display_place": "Tullig"
+}, {
+  "place_id": "159531947",
+  "licence": "https://locationiq.com/attribution",
+  "osm_type": "way",
+  "osm_id": "311125755",
+  "lat": "52.5983462609935",
+  "lon": "-9.77741732385129",
+  "display_name": "R487, Kilballyowen, Rahona ED, West Clare Municipal District, County Clare, Munster, Ireland",
+  "address": {
+    "road": "R487",
+    "locality": "Kilballyowen",
+    "city_district": "Rahona ED",
+    "region": "West Clare Municipal District",
+    "county": "County Clare",
+    "state_district": "Munster",
+    "country": "Ireland",
+    "country_code": "ie"
+  },
+  "boundingbox": [
+    "52.5973998",
+    "52.598916",
+    "-9.7951994",
+    "-9.7737247"
+  ],
+  "display_place": "R487"
+}, {
+  "place_id": "128674655",
+  "licence": "https://locationiq.com/attribution",
+  "osm_type": "way",
+  "osm_id": "172040343",
+  "lat": "52.6095069580666",
+  "lon": "-9.76687287598333",
+  "display_name": "Cross, Tullig ED, West Clare Municipal District, County Clare, Munster, Ireland",
+  "address": {
+    "locality": "Cross",
+    "city_district": "Tullig ED",
+    "region": "West Clare Municipal District",
+    "county": "County Clare",
+    "state_district": "Munster",
+    "country": "Ireland",
+    "country_code": "ie"
+  },
+  "boundingbox": [
+    "52.6008561",
+    "52.6110958",
+    "-9.7672141",
+    "-9.7647676"
+  ],
+  "display_place": "Cross"
+}];
+
+module.exports = { dummy_route: route, dummy_search: search, dummy_reverse: reverse };
