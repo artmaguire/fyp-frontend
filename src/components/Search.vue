@@ -78,18 +78,18 @@ export default {
       this.$store.commit('SET_ROUTE_LOADING', this.activeType.type);
 
       let params = {
-        source: this.startNode.lat + ',' + this.startNode.lon,
-        target: this.endNode.lat + ',' + this.endNode.lon,
+        source: {lat: this.startNode.lat, lng: this.startNode.lon},
+        target: {lat: this.endNode.lat, lng: this.endNode.lon},
         algorithmType: this.algorithmType,
         visualisation: this.visualisation ? 1 : 0,
         flag: this.activeType.flag
       };
 
       let nodes = this.additionalNodes.map(({ data: { lat, lon } }) => {
-        return { lat: lat, lon: lon };
+        return { lat: lat, lng: lon };
       });
       if (nodes.length)
-        params.additionalNodes = nodes;
+        params.additionalNodes = JSON.stringify(nodes);
 
       axios.get('/route', {
         params: params
@@ -132,6 +132,8 @@ export default {
         this.setRouteDetails(distance, this.formatTime(time));
         this.routeDetailsDownload = JSON.stringify(downloadRoute);
 
+      }).catch(err => {
+        console.error(err);
       }).finally(() => {
         this.$store.commit('SET_ROUTE_LOADING', null);
       });
