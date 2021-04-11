@@ -506,7 +506,7 @@ export default {
 }
 
 /* MEDIA QUERIES FOR MOBILE USE */
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .search-view {
     width: calc(100% - 175px);
     top: 10px;
