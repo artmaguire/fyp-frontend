@@ -67,8 +67,8 @@ export default {
       this.closeSearchList();
     },
     createNode: function () {
+      this.searchQuery = this.nodeData?.display_place || '';
       if (this.nodeData.display_place) {
-        this.searchQuery = this.nodeData.display_place || '';
         removeGeoJSON();
         addMarker(this.nodeData.display_place, this.nodeData.lat, this.nodeData.lon, this.id, this.index);
       }

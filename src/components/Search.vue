@@ -101,7 +101,7 @@ export default {
             text: 'Could not find your route.',
             icon: 'error',
             confirmButtonText: 'Ok'
-          }).then(() => console.log('Not enough nodes'));
+          }).then(() => console.error('Not enough nodes'));
           return;
         }
 
@@ -209,7 +209,6 @@ export default {
                   v-bind:title="searchType.type" @click="setActiveType(searchType)" :key="searchType.type">
                 <font-awesome-icon :icon="searchType.icon"/>
               </li>
-              <!-- TODO: Add more gifs for bus and truck? -->
             </ul>
           </div>
         </div>
