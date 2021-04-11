@@ -3,7 +3,7 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 // eslint-disable-next-line sort-imports
 import 'leaflet-easybutton';
-import location_img from "../assets/markers/user-location.png";
+import location_img from "../assets/markers/user_location.png";
 import { Nodes } from "./constants";
 import Swal from 'sweetalert2';
 
@@ -204,8 +204,6 @@ function locateUser() {
         text: 'Location is disabled for this website.',
         icon: 'error',
         confirmButtonText: 'Ok'
-      }).then(() => {
-        locateUser();
       });
     });
 }
