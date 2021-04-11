@@ -91,12 +91,10 @@ export default {
 }
 
 .walking-gif {
-  margin-top: 25px;
   display: block;
-  margin-left: auto;
-  margin-right: auto;
   width: 150px;
   height: 250px;
+  margin: 25px auto -40px;
 }
 
 /* MEDIA QUERIES FOR MOBILE USE */
