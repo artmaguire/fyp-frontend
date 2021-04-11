@@ -3,6 +3,7 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 // eslint-disable-next-line sort-imports
 import 'leaflet-easybutton';
+import location_img from "../assets/markers/user-location.png";
 import { Nodes } from "./constants";
 import Swal from 'sweetalert2';
 
@@ -174,7 +175,7 @@ export function createMap() {
   }
 
   // Button for users location
-  L.easyButton('<img style="width: 15px;" src="/images/marker-icon.png" />', (btn, map) => {
+  L.easyButton(`<img style="width: 14px; height: 16px" src="${ location_img }" />`, (btn, map) => {
     if (userLocation.length !== 0) {
       map.flyTo([userLocation[0], userLocation[1]], 14);
     } else {
