@@ -98,4 +98,11 @@ export default {
   width: 150px;
   height: 250px;
 }
+
+/* MEDIA QUERIES FOR MOBILE USE */
+@media (max-width: 1024px) {
+  .finding-route-card {
+    zoom: 2;
+  }
+}
 </style>

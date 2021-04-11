@@ -539,11 +539,11 @@ export default {
   }
 
   .add-node {
-    font-size: 2.4rem;
+    zoom: 1.8;
   }
 
   .reverse-waypoints {
-    font-size: 2.4rem;
+    zoom: 1.8;
   }
 
   #go-button {
