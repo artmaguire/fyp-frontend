@@ -138,8 +138,13 @@ export default {
         this.setRouteDetails(distance, this.formatTime(time));
         this.routeDetailsDownload = JSON.stringify(downloadRoute);
 
-      }).catch(err => {
-        console.error(err);
+      }).catch(() => {
+        Swal.fire({
+          title: 'Unknown Error Occurred',
+          text: 'Could not find your route.',
+          icon: 'error',
+          confirmButtonText: 'Ok'
+        }).then(() => console.error('Not enough nodes'));
       }).finally(() => {
         this.$store.commit('SET_ROUTE_LOADING', null);
       });
