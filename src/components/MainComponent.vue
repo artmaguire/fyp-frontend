@@ -99,6 +99,7 @@ export default {
 <style>
 * {
   font-family: 'Lato', sans-serif;
+  font-weight: 400;
 }
 
 #mapid {

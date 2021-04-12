@@ -350,7 +350,7 @@ export default {
   transition: opacity 0.3s;
 }
 
-.search-view-header {
+.search-view-header p {
   margin: -20px -20px 0 -20px;
   background: crimson;
   color: white;
