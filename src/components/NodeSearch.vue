@@ -32,6 +32,11 @@ export default {
       }, 250, data);
     },
     searchSelected: function (result) {
+      if (result.no_results) {
+        this.searchQuery = '';
+        return;
+      }
+
       switch (this.index) {
         case 0:
           return this.$store.commit('SET_START_NODE', result);
@@ -80,6 +85,11 @@ export default {
         return;
 
       this.searchResults = data.geonames;
+
+      if (data.geonames.error)
+        this.searchResults = [{ no_results: true, display_place: 'No results found.' }];
+      if (this.searchQuery === '')
+        this.searchResults = [{ no_results: true, display_place: 'Enter a location...' }];
     }
   },
   computed: {
