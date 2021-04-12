@@ -257,18 +257,34 @@ export function removeMarker(markerId) {
   if (!marker)
     return;
 
-  markerMap.delete(markerId);
-  map.removeLayer(marker);
+  if (!(markerId === -1 || markerId === 0)) {
+    reOrderMarkerMap(markerId);
+  } else {
+    markerMap.delete(markerId);
+    map.removeLayer(marker);
+  }
+}
+
+function reOrderMarkerMap(markerId) {
+  let orderedMarkers = new Map([...markerMap.entries()].sort());
 
   // Re-configures order of markers
-  if (!(markerId === -1 || markerId === 0)) {
-    for (let i = markerId; i < markerMap.size; i++) {
-      if (markerMap.has(i + 1)) {
-        addMarker(markerMap.get(i + 1).name, markerMap.get(i + 1)._latlng.lat, markerMap.get(i + 1)._latlng.lng, markerId, markerId);
-        map.removeLayer(markerMap.get(i + 1));
-        markerMap.delete(i + 1);
-      }
-    }
+  while (orderedMarkers.has(markerId)) {
+    map.removeLayer(markerMap.get(markerId));
+    markerMap.delete(markerId);
+
+    if (!orderedMarkers.has(markerId + 1)) break;
+
+    let nextMarkerId = markerId + 1;
+    let nextMarker = markerMap.get(nextMarkerId);
+
+    let icon = markerIcons[markerId];
+    let marker = L.marker([nextMarker._latlng.lat, nextMarker._latlng.lng], { icon: icon }).addTo(map);
+    marker.bindPopup("<b>" + nextMarker.name).openPopup();
+    marker.name = nextMarker.name;
+    markerMap.set(markerId, marker);
+
+    markerId = nextMarkerId;
   }
 }
 
