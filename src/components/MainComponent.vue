@@ -102,6 +102,20 @@ export default {
   font-weight: 400;
 }
 
+button:focus {
+  box-shadow: none !important;
+}
+
+button:hover {
+  box-shadow: 1px 3px 6px #999 !important;
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+button:active {
+  box-shadow: 1px 1px 2px #999 !important;
+  transition: box-shadow 0.1s ease-in-out;
+}
+
 #mapid {
   height: 100vh;
 }
