@@ -22,10 +22,9 @@ export default {};
   cursor: pointer;
   padding: 8px;
 
-
   &:hover,
   &:focus {
-    background: #fff;
+    background: #FFF;
     color: #000;
     outline: none;
   }

@@ -1,0 +1,6 @@
+extends: stylelint-config-standard
+defaultSeverity: warning
+rules: {
+  indentation: 2,
+  color-hex-case: upper
+}

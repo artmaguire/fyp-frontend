@@ -24,7 +24,6 @@ export default {
 @import "~bulma/bulma";
 @import "~bulma-pageloader/dist/css/bulma-pageloader";
 
-
 .pageloader {
   background: crimson !important;
 }

@@ -106,8 +106,9 @@ export default {
   height: 100vh;
 }
 
-/*Removes the scroll bar*/
-html, body {
+/* Removes the scroll bar */
+html,
+body {
   overflow: hidden;
 }
 </style>

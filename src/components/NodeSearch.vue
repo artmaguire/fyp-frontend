@@ -198,11 +198,11 @@ export default {
 }
 
 .search-menu-item:hover {
-  background-color: #ececec;
+  background-color: #ECECEC;
 }
 
 .search-menu-item-addr {
-  color: #666666;
+  color: #666;
   font-size: small;
 }
 

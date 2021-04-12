@@ -20,9 +20,3 @@ rules: {
   no-multi-spaces: warn,
   vue/comment-directive: 0
 }
-ignorePatterns:
-  - "webpack*"
-  - "public/"
-  - "dummy*"
-  - "babel*"
-  - "src/assets/"

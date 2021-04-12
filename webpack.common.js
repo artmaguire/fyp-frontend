@@ -3,6 +3,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { VueLoaderPlugin } = require('vue-loader');
 const CopyPlugin = require('copy-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
+const StyleLintPlugin = require('stylelint-webpack-plugin');
 
 module.exports = {
   entry: './src/main.js',
@@ -70,7 +71,10 @@ module.exports = {
         { from: 'src/assets/gifs', to: 'images/gifs' },
       ]
     }),
-    new ESLintPlugin({ extensions: ['.js', '.vue', '.json'] })
+    new ESLintPlugin({ extensions: ['.js', '.vue', '.json'] }),
+    new StyleLintPlugin({
+      files: ['**/*.{vue,htm,html,css,sss,less,scss,sass}'],
+    })
   ],
   resolve: {
     alias: {
