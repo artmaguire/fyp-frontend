@@ -20,14 +20,6 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(scss)$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
-      },
-      {
-        test: /\.(css)$/,
-        use: [MiniCssExtractPlugin.loader, 'css-loader']
-      },
-      {
         test: /\.vue$/,
         loader: 'vue-loader'
       },

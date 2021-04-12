@@ -6,6 +6,17 @@ const { dummy_route, dummy_search, dummy_reverse } = require("./dummy");
 module.exports = merge(common, {
   mode: 'development',
   devtool: 'inline-source-map',
+  module: {
+    rules: [
+      {
+        test: /\.(scss)$/,
+        use: ['vue-style-loader', 'css-loader', 'sass-loader']
+      },
+      {
+        test: /\.(css)$/,
+        use: ['vue-style-loader', 'css-loader']
+      }]
+  },
   devServer: {
     open: true,
     hot: true,

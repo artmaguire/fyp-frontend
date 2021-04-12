@@ -1,4 +1,5 @@
 <script>
+import 'vue-slider-component/theme/antd.css';
 import { addDottedLine, addGeoJSON, removeAllMarkers, removeGeoJSON, removeRoute, reverseMarkers } from "../js/map";
 import { Algorithms, Flags } from "../js/constants";
 
@@ -25,6 +26,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { mapState } from "vuex";
 import NodeSearch from "./NodeSearch";
 import Swal from "sweetalert2";
+import VueSlider from 'vue-slider-component';
 
 
 library.add(faCar, faBicycle, faWalking, faTruck, faPlus, faRetweet, faTimes, faSearch, faRoute, faClock, faFileExport, faDirections,
@@ -33,7 +35,8 @@ library.add(faCar, faBicycle, faWalking, faTruck, faPlus, faRetweet, faTimes, fa
 export default {
   name: 'search',
   components: {
-    NodeSearch
+    NodeSearch,
+    VueSlider
   },
   data: function () {
     return {
@@ -46,6 +49,8 @@ export default {
       Algorithms: Algorithms,
       algorithmType: Algorithms.BI_ASTAR,
       visualisation: false,
+      history: false,
+      historySlider: 0,
       routeDetailsDownload: {},
       expandRouteDetails: false,
       distance: '',
@@ -81,7 +86,8 @@ export default {
         source: {lat: this.startNode.lat, lng: this.startNode.lon},
         target: {lat: this.endNode.lat, lng: this.endNode.lon},
         algorithmType: this.algorithmType,
-        visualisation: this.visualisation ? 1 : 0,
+        visualisation: this.visualisation,
+        history: this.history,
         flag: this.activeType.flag
       };
 
@@ -280,11 +286,21 @@ export default {
               </label>
             </div>
           </div>
-          <div id="visualisation-checkbox" class="algorithm-radio-buttons">
+          <div id="visualisation-checkbox" class="search-checkbox algorithm-radio-buttons">
             <label class="checkbox">
               <input v-model="visualisation" type="checkbox">
               <strong class="start-end-strong">Visualisation</strong>
             </label>
+          </div>
+          <div id="history-checkbox" class="search-checkbox algorithm-radio-buttons">
+            <label class="checkbox">
+              <input v-model="history" type="checkbox">
+              <strong class="start-end-strong">History</strong>
+            </label>
+          </div>
+          <div>
+            <hr />
+            <vue-slider v-model=historySlider :max=99 />
           </div>
         </div>
         <div class="algorithm-radio-dropdown">
@@ -463,7 +479,6 @@ export default {
 
 .expand {
   display: block;
-  overflow: hidden;
   padding-bottom: 8px;
 }
 
@@ -485,7 +500,7 @@ export default {
   cursor: pointer;
 }
 
-#visualisation-checkbox {
+.search-checkbox {
   padding: 8px 0 0 8px;
 }
 

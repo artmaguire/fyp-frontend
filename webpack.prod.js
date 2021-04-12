@@ -2,11 +2,12 @@ const { merge } = require('webpack-merge');
 const common = require('./webpack.common.js');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const PurgeCSSPlugin = require('purgecss-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const TerserPlugin = require("terser-webpack-plugin");
-const zlib = require('zlib');
 const glob = require('glob');
+const zlib = require('zlib');
 
 const PATHS = {
   src: __dirname + '/src',
@@ -33,6 +34,17 @@ module.exports = merge(common, {
     runtimeChunk: true,
     usedExports: true
   },
+  module: {
+    rules: [
+      {
+        test: /\.(scss)$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader']
+      },
+      {
+        test: /\.(css)$/,
+        use: [MiniCssExtractPlugin.loader, 'css-loader']
+      }]
+  },
   plugins: [
     new CleanWebpackPlugin(),
     new CompressionPlugin({
@@ -53,6 +65,9 @@ module.exports = merge(common, {
       },
       threshold: 10240,
       minRatio: 0.8,
+    }),
+    new MiniCssExtractPlugin({
+      filename: '[name].[contenthash].css'
     }),
     new PurgeCSSPlugin({
       paths: glob.sync(`${ PATHS.src }/**/*`, { nodir: true }),
