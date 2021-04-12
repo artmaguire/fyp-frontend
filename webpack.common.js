@@ -1,5 +1,4 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { VueLoaderPlugin } = require('vue-loader');
 const CopyPlugin = require('copy-webpack-plugin');
 const ESLintPlugin = require('eslint-webpack-plugin');
@@ -61,9 +60,6 @@ module.exports = {
       inject: 'body',
       favicon: './src/assets/favicon_io/favicon.ico'
     }),
-    new MiniCssExtractPlugin({
-      filename: '[name].[contenthash].css'
-    }),
     new VueLoaderPlugin(),
     new CopyPlugin({
       patterns: [
@@ -73,7 +69,7 @@ module.exports = {
     }),
     new ESLintPlugin({ extensions: ['.js', '.vue', '.json'] }),
     new StyleLintPlugin({
-      files: ['**/*.{vue,htm,html,css,sss,less,scss,sass}'],
+      files: ['src/**/*.{vue,htm,html,css,sss,less,scss,sass}'],
     })
   ],
   resolve: {
