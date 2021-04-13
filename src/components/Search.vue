@@ -135,7 +135,7 @@ export default {
           downloadRoute.push(route.route);
 
           if (!route.history)
-            addGeoJSON(this.routes.route, 0, 0, 0, 0, "crimson", 3);
+            addGeoJSON(route.route, 0, 0, 0, 0, "crimson", 3);
         }
 
         this.setRouteDetails(distance, this.formatTime(time));
