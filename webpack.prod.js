@@ -72,7 +72,7 @@ module.exports = merge(common, {
     new PurgeCSSPlugin({
       paths: glob.sync(`${ PATHS.src }/**/*`, { nodir: true }),
       safelist: {
-        standard: [/leaflet/, /marker/]
+        standard: [/leaflet/, /marker/, /vue-slider/]
       }
     })
   ]

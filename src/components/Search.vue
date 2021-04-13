@@ -333,8 +333,6 @@ export default {
 </template>
 
 <style lang="scss">
-@import '~vue-slider-component/theme/antd.css';
-
 .show-search-view {
   visibility: visible !important;
 }

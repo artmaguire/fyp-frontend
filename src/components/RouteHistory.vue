@@ -81,13 +81,17 @@ export default {
     <vue-slider v-model="historyIndex" :max="historyLength" :disabled="true" :duration="0.1" height="10px"/>
     <div class="is-flex">
       <button class="button is-rounded" @click="btnClick">
-        <font-awesome-icon v-if="historyPlaying" icon="pause" />
-        <font-awesome-icon v-else icon="play" />
+        <font-awesome-icon v-if="historyPlaying" icon="pause"/>
+        <font-awesome-icon v-else icon="play"/>
       </button>
       <h5 class="is-align-self-center is-size-6 mx-2">Speed: </h5>
       <span class="is-align-self-center is-flex-grow-1 mt-1">
-        <vue-slider v-model="historySpeed" :max="1000" />
+        <vue-slider v-model="historySpeed" :max="1000"/>
       </span>
     </div>
   </div>
 </template>
+
+<style lang="scss">
+@import '~vue-slider-component/theme/antd.css';
+</style>
