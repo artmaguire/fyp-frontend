@@ -107,12 +107,12 @@ button:focus {
 }
 
 button:hover {
-  box-shadow: 1px 3px 6px #999 !important;
+  box-shadow: 1px 2px 3px #bababa !important;
   transition: box-shadow 0.3s ease-in-out;
 }
 
 button:active {
-  box-shadow: 1px 1px 2px #999 !important;
+  box-shadow: 1px 1px 0 #bababa !important;
   transition: box-shadow 0.1s ease-in-out;
 }
 
