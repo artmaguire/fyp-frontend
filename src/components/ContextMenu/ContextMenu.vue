@@ -90,9 +90,9 @@ export default {
   position: fixed;
   z-index: 999;
   overflow: hidden;
-  background: #FFF;
+  background: #fff;
   border-radius: 4px;
-  box-shadow: 0 1px 4px 0 #EEE;
+  box-shadow: 0 1px 4px 0 #eee;
 
   &:focus {
     outline: none;

@@ -14,7 +14,7 @@ export default {};
   position: relative;
   background: #000;
   border-radius: 0;
-  color: #FFF;
+  color: #fff;
   text-decoration: none;
   font-size: 13px;
   width: 100%;
@@ -24,7 +24,7 @@ export default {};
 
   &:hover,
   &:focus {
-    background: #FFF;
+    background: #fff;
     color: #000;
     outline: none;
   }

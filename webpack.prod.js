@@ -12,7 +12,7 @@ const zlib = require('zlib');
 const PATHS = {
   src: __dirname + '/src',
   node_modules: __dirname + '/node_modules'
-}
+};
 
 module.exports = merge(common, {
   mode: 'production',

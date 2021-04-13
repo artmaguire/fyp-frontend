@@ -32,10 +32,8 @@ export default {
       }, 250, data);
     },
     searchSelected: function (result) {
-      if (result.no_results) {
-        this.searchQuery = '';
+      if (result.no_results)
         return;
-      }
 
       switch (this.index) {
         case 0:
@@ -89,7 +87,7 @@ export default {
       if (data.geonames.error)
         this.searchResults = [{ no_results: true, display_place: 'No results found.' }];
       if (this.searchQuery === '')
-        this.searchResults = [{ no_results: true, display_place: 'Enter a location...' }];
+        this.searchResults = [{ no_results: true, display_place: 'Type to search...' }];
     }
   },
   computed: {
@@ -208,7 +206,7 @@ export default {
 }
 
 .search-menu-item:hover {
-  background-color: #ECECEC;
+  background-color: #ececec;
 }
 
 .search-menu-item-addr {
