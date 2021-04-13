@@ -1,7 +1,20 @@
 const { merge } = require('webpack-merge');
-const dev = require('./webpack.dev.js');
+const common = require('./webpack.common.js');
 
-module.exports = merge(dev, {
+module.exports = merge(common, {
+  mode: 'development',
+  devtool: 'inline-source-map',
+  module: {
+    rules: [
+      {
+        test: /\.(scss)$/,
+        use: ['vue-style-loader', 'css-loader', 'sass-loader']
+      },
+      {
+        test: /\.(css)$/,
+        use: ['vue-style-loader', 'css-loader']
+      }]
+  },
   devServer: {
     open: true,
     hot: true,
