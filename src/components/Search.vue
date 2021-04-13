@@ -1,5 +1,4 @@
 <script>
-import 'vue-slider-component/theme/antd.css';
 import { addDottedLine, addGeoJSON, removeAllMarkers, removeGeoJSON, removeRoute, reverseMarkers } from "../js/map";
 import { Algorithms, Flags } from "../js/constants";
 
@@ -25,8 +24,8 @@ import axios from "axios";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { mapState } from "vuex";
 import NodeSearch from "./NodeSearch";
+import RouteHistory from "./RouteHistory";
 import Swal from "sweetalert2";
-import VueSlider from 'vue-slider-component';
 
 
 library.add(faCar, faBicycle, faWalking, faTruck, faPlus, faRetweet, faTimes, faSearch, faRoute, faClock, faFileExport, faDirections,
@@ -36,7 +35,7 @@ export default {
   name: 'search',
   components: {
     NodeSearch,
-    VueSlider
+    RouteHistory
   },
   data: function () {
     return {
@@ -50,7 +49,8 @@ export default {
       algorithmType: Algorithms.BI_ASTAR,
       visualisation: false,
       history: false,
-      historySlider: 0,
+      routes: {},
+      routeHistory: [],
       routeDetailsDownload: {},
       expandRouteDetails: false,
       distance: '',
@@ -79,12 +79,14 @@ export default {
       }
 
       removeGeoJSON();
+      this.routeHistory = [];
+      this.routes = {};
 
       this.$store.commit('SET_ROUTE_LOADING', this.activeType.type);
 
       let params = {
-        source: {lat: this.startNode.lat, lng: this.startNode.lon},
-        target: {lat: this.endNode.lat, lng: this.endNode.lon},
+        source: { lat: this.startNode.lat, lng: this.startNode.lon },
+        target: { lat: this.endNode.lat, lng: this.endNode.lon },
         algorithmType: this.algorithmType,
         visualisation: this.visualisation,
         history: this.history,
@@ -114,6 +116,10 @@ export default {
         let time = 0, distance = 0;
         let downloadRoute = [];
 
+        this.routes = response.data;
+        if (this.history)
+          this.routeHistory = this.routes.map(route => route.history);
+
         for (let route of response.data) {
           let startLatLng = [[route.source_point.lat, route.source_point.lng], [route.start_point.lat, route.start_point.lng]];
           let targetLatLng = [[route.target_point.lat, route.target_point.lng], [route.end_point.lat, route.end_point.lng]];
@@ -128,11 +134,8 @@ export default {
           distance += route.distance;
           downloadRoute.push(route.route);
 
-          if (route.history)
-            console.log(route.history);
-          // setRouteHistory(route.history);
-          else
-            addGeoJSON(route.route, 0, 0, 0, 0, "crimson", 3);
+          if (!route.history)
+            addGeoJSON(this.routes.route, 0, 0, 0, 0, "crimson", 3);
         }
 
         this.setRouteDetails(distance, this.formatTime(time));
@@ -169,7 +172,9 @@ export default {
       removeRoute();
       removeGeoJSON();
 
+      this.routes = {};
       this.routeDetails = false;
+      this.routeHistory = [];
     },
     setRouteDetails(distance, time) {
       this.routeDetails = true;
@@ -235,14 +240,14 @@ export default {
           <NodeSearch :id="-1" :index="-1" :node-data="endNode"></NodeSearch>
         </div>
         <div class="sv-item">
-          <button :disabled="additionalNodes.length >= 5" class="button add-node" title="Add location"
+          <button :disabled="additionalNodes.length >= 5" class="button is-rounded add-node" title="Add location"
                   @click="addNode">
             <font-awesome-icon icon="plus"/>
           </button>
-          <button class="button reverse-waypoints" title="Reverse waypoints" @click="reverseWayPoints">
+          <button class="button is-rounded reverse-waypoints" title="Reverse waypoints" @click="reverseWayPoints">
             <font-awesome-icon icon="retweet"/>
           </button>
-          <button class="button reverse-waypoints" title="Clear route" @click="clearRoute">
+          <button class="button is-rounded reverse-waypoints" title="Clear route" @click="clearRoute">
             <font-awesome-icon icon="times"/>
           </button>
           <div id="search-btn">
@@ -266,7 +271,7 @@ export default {
         </div>
 
         <div class="addition-settings" v-bind:class="{ expand: expand }">
-          <hr style="margin: 1px">
+          <hr style="margin: 1px;">
           <div class="algorithm-radio-buttons">
             <strong class="start-end-strong">Select an algorithm</strong>
             <div class="control" style="padding-left: 24px;">
@@ -303,18 +308,15 @@ export default {
               <strong class="start-end-strong">History</strong>
             </label>
           </div>
-          <div>
-            <hr />
-            <vue-slider v-model=historySlider :max=99 />
-          </div>
+          <RouteHistory v-if="routeHistory.length" :routeHistory="routeHistory" :finalRoutes="routes"/>
         </div>
         <div class="algorithm-radio-dropdown">
           <button class="button is-rounded is-small expand-search-view-button phone-expand" title="Additional Settings"
                   @click="expandSearchView">
-              <span v-show="expand" style="color:crimson">
+              <span v-show="expand" style="color: crimson;">
                   <font-awesome-icon icon="chevron-up" size="lg"/>
               </span>
-            <span v-show="!expand" style="color:crimson">
+            <span v-show="!expand" style="color: crimson;">
               <font-awesome-icon icon="chevron-down" size="lg"/>
             </span>
           </button>
@@ -330,7 +332,9 @@ export default {
   </div>
 </template>
 
-<style>
+<style lang="scss">
+@import '~vue-slider-component/theme/antd.css';
+
 .show-search-view {
   visibility: visible !important;
 }
@@ -454,6 +458,7 @@ export default {
   font-size: 1.4rem;
   height: 100%;
   display: inline;
+  margin: 2px;
 }
 
 .sv-icon:hover {
@@ -488,7 +493,7 @@ export default {
 }
 
 .route-details {
-  /*display: none;*/
+  /* display: none; */
   text-align: center;
   padding: inherit;
 }

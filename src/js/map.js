@@ -400,29 +400,6 @@ export function addDottedLine(LatLngArray) {
   routeLayerGroup.addLayer(polyline);
 }
 
-/*let routeHistory = [];
-let routeHistoryIndex = 0;*/
-
-/*export function setRouteHistory(history) {
-  routeHistory = history;
-  routeHistoryIndex = 0;
-}*/
-
-/*function routeHistoryNext(count = 1) {
-  for (let i = 0; i < count; i++) {
-    if (routeHistoryIndex >= routeHistory.length) {
-      console.log("FOUND TARGET!!!");
-      return;
-    }
-    let nodes = routeHistory[routeHistoryIndex];
-
-    for (let node of nodes)
-      addGeoJSON(node.geojson, node.cost, node.total_cost, node.distance,
-        node.distance_minutes, null, 3);
-    routeHistoryIndex++;
-  }
-}*/
-
 export function removeAllMarkers() {
   for (let markerId of markerMap.keys())
     map.removeLayer(markerMap.get(markerId));
