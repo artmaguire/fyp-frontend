@@ -23,8 +23,8 @@ export default {
       isSplashLoading: true,
       contextMenuItems: [
         { title: "Directions From Here", value: 1 },
-        { title: "Directions To Here", value: 2 },
         { title: "Directions Via Here", value: 3 },
+        { title: "Directions To Here", value: 2 },
       ],
       ContextMenuActions: Object.freeze(
         {

@@ -101,7 +101,7 @@ export default {
 
       axios.get('/route', {
         params: params
-      }).then(response => {
+      }, { timeout: 3600 }).then(response => {
         let err = response?.data?.error?.code;
         if (err && err < 0) {
           Swal.fire({
