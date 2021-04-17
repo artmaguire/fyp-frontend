@@ -377,20 +377,52 @@ export function getBoundsLngLat() {
 
 let routeLayerGroup;
 
-const colors = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
-  '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
-  '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A',
-  '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
-  '#66994D', '#B366CC', '#4D8000', '#B33300', '#CC80CC',
-  '#66664D', '#991AFF', '#E666FF', '#4DB3FF', '#1AB399',
-  '#E666B3', '#33991A', '#CC9999', '#B3B31A', '#00E680',
-  '#4D8066', '#809980', '#E6FF80', '#1AFF33', '#999933',
-  '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3',
-  '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'];
+// const colors = ['#FF6633', '#FFB399', '#FF33FF', '#FFFF99', '#00B3E6',
+//   '#E6B333', '#3366E6', '#999966', '#99FF99', '#B34D4D',
+//   '#80B300', '#809900', '#E6B3B3', '#6680B3', '#66991A',
+//   '#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
+//   '#66994D', '#B366CC', '#4D8000', '#B33300', '#CC80CC',
+//   '#66664D', '#991AFF', '#E666FF', '#4DB3FF', '#1AB399',
+//   '#E666B3', '#33991A', '#CC9999', '#B3B31A', '#00E680',
+//   '#4D8066', '#809980', '#E6FF80', '#1AFF33', '#999933',
+//   '#FF3380', '#CCCC00', '#66E64D', '#4D80CC', '#9900B3',
+//   '#E64D66', '#4DB380', '#FF4D4D', '#99E6E6', '#6666FF'];
+
+const color_scale_bad = [
+  '#FFC3B4',
+  '#FCA988',
+  '#F7975F',
+  '#F08B37',
+  '#DF6131',
+  '#CE3B2A',
+  '#BC252F',
+  '#AA1F41',
+  '#971A4F',
+  '#841557'
+];
+
+const color_scale_good = ['#3C8502', '#2B9904', '#14AD06', '#09C119', '#0CD341',
+  '#10E56E', '#14F69F', '#42FDA5', '#73FFB3', '#A6FFC8'];
+
+const color_scale_negative = [
+  '#1E7D7D',
+  '#247D8F',
+  '#2A78A1',
+  '#316FB3',
+  '#3862C4',
+  '#3F52D5',
+  '#4D46E5',
+  '#BAC7FA'];
 
 export function addGeoJSON(routeGeoJSON, cost = 0, totalCost = 0, distance = 0, distanceMinutes = 0, color = null, weight = 1, popup = true) {
+  let delta = cost + distanceMinutes;
   if (!color)
-    color = colors[Math.floor(Math.random() * colors.length)];
+    if (delta < 0)
+      color = color_scale_negative[Math.floor(Math.abs(delta) < color_scale_negative.length ? Math.abs(delta) : color_scale_negative.length - 1)];
+    else if (delta < 1)
+      color = color_scale_good[Math.floor(delta * color_scale_good.length)];
+    else
+      color = color_scale_bad[Math.floor(delta < color_scale_bad.length ? delta : color_scale_bad.length - 1)];
 
   geoJSONLayer = L.geoJSON(routeGeoJSON, {
     onEachFeature: popup ? (feature, layer) => {
