@@ -43,7 +43,7 @@ export default {
         { type: 'driving', icon: 'car', flag: Flags.CAR },
         { type: 'cycling', icon: 'bicycle', flag: Flags.BIKE },
         { type: 'walking', icon: 'walking', flag: Flags.FOOT },
-        { type: 'courier', icon: 'truck', flag: Flags.CAR }],
+        { type: 'courier', icon: 'truck', flag: Flags.HGV }],
       activeType: {},
       Algorithms: Algorithms,
       algorithmType: Algorithms.BI_ASTAR,

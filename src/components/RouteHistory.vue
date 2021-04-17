@@ -39,13 +39,13 @@ export default {
 
         for (let node of nodes)
           addGeoJSON(node.geojson, node.cost, node.total_cost, node.distance,
-            node.distance_minutes, null, 3);
+            node.distance_minutes, null, 2);
       }
 
       this.historyIndex++;
       if (this.historyIndex >= this.historyLength) {
         for (let route of this.finalRoutes)
-          addGeoJSON(route.route, 0, 0, 0, 0, "crimson", 5);
+          addGeoJSON(route.route, 0, 0, 0, 0, "crimson", 4);
         this.stopHistoryInterval();
       }
     },

@@ -14,5 +14,6 @@ export const Nodes = {
 export const Flags = {
   CAR: 1,
   BIKE: 2,
-  FOOT: 4
+  FOOT: 4,
+  HGV: -1
 };
