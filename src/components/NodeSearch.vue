@@ -35,6 +35,8 @@ export default {
       if (result.no_results)
         return;
 
+      this.$store.commit('SET_ROUTE_HISTORY', []);
+
       switch (this.index) {
         case 0:
           return this.$store.commit('SET_START_NODE', result);

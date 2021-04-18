@@ -49,8 +49,7 @@ export default {
       algorithmType: Algorithms.BI_ASTAR,
       visualisation: false,
       history: false,
-      routes: {},
-      routeHistory: [],
+      routes: [],
       routeDetailsDownload: {},
       expandRouteDetails: false,
       distance: '',
@@ -79,10 +78,10 @@ export default {
       }
 
       removeGeoJSON();
-      this.routeHistory = [];
-      this.routes = {};
+      this.routes = [];
 
       this.$store.commit('SET_ROUTE_LOADING', this.activeType.type);
+      this.$store.commit('SET_ROUTE_HISTORY', []);
 
       let params = {
         source: { lat: this.startNode.lat, lng: this.startNode.lon },
@@ -118,7 +117,7 @@ export default {
 
         this.routes = response.data;
         if (this.history)
-          this.routeHistory = this.routes.map(route => route.history);
+          this.$store.commit('SET_ROUTE_HISTORY', this.routes.map(route => route.history));
 
         for (let route of response.data) {
           let startLatLng = [[route.source_point.lat, route.source_point.lng], [route.start_point.lat, route.start_point.lng]];
@@ -172,9 +171,8 @@ export default {
       removeRoute();
       removeGeoJSON();
 
-      this.routes = {};
+      this.routes = [];
       this.routeDetails = false;
-      this.routeHistory = [];
     },
     setRouteDetails(distance, time) {
       this.routeDetails = true;
@@ -207,7 +205,7 @@ export default {
   created: function () {
     this.activeType = this.searchTypes[0];
   },
-  computed: mapState(['startNode', 'endNode', 'additionalNodes'])
+  computed: mapState(['startNode', 'endNode', 'additionalNodes', 'routeHistory'])
 };
 </script>
 

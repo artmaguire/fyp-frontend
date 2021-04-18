@@ -65,6 +65,9 @@ export default {
       this.historySpeed = 100;
     this.setHistoryInterval();
   },
+  beforeDestroy() {
+    this.stopHistoryInterval();
+  },
   watch: {
     historySpeed() {
       this.stopHistoryInterval();

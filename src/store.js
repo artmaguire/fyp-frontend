@@ -8,7 +8,8 @@ export default new Vuex.Store({
     startNode: {},
     endNode: {},
     additionalNodes: [],
-    routeType: null
+    routeType: null,
+    routeHistory: []
   },
   mutations: {
     PUSH_NODE({ additionalNodes }, node) {
@@ -29,6 +30,9 @@ export default new Vuex.Store({
     SET_ROUTE_LOADING(state, searchType) {
       state.routeType = searchType;
     },
+    SET_ROUTE_HISTORY(state, history) {
+      Vue.set(state, 'routeHistory', history);
+    },
     CLEAR_NODES(state) {
       state.additionalNodes = [];
     }
@@ -38,11 +42,13 @@ export default new Vuex.Store({
       let start = state.startNode;
       commit('SET_START_NODE', state.endNode);
       commit('SET_END_NODE', start);
+      commit('SET_ROUTE_HISTORY', []);
     },
     clearNodes({ commit }) {
       commit('SET_START_NODE', {});
       commit('SET_END_NODE', {});
       commit('CLEAR_NODES');
+      commit('SET_ROUTE_HISTORY', []);
     }
   }
 });

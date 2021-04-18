@@ -59,6 +59,7 @@ export default {
   },
   sockets: {
     reverse_geoname_result(data) {
+      this.$store.commit('SET_ROUTE_HISTORY', []);
       switch (data.action) {
         case this.ContextMenuActions.FROM:
           this.$store.commit('SET_START_NODE', data.geoname);
