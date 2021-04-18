@@ -414,7 +414,7 @@ const color_scale_negative = [
   '#4D46E5',
   '#BAC7FA'];
 
-export function addGeoJSON(routeGeoJSON, cost = 0, totalCost = 0, distance = 0, distanceMinutes = 0, color = null, weight = 1, popup = true) {
+export function addGeoJSON(routeGeoJSON, cost = 0, totalCost = 0, distance = 0, distanceMinutes = 0, color = null, weight = 1, popup = false) {
   let delta = cost + distanceMinutes;
   if (!color)
     if (delta < 0)
